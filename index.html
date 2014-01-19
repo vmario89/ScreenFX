@@ -33,12 +33,34 @@
 
 <p>This tool is inspired originally by the tool "Asus Multiframe" which was only capable to handle two screens.</p>
 
-<p>How it works?</p>
+<h3>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h3>
+
+<p>This library is written for JavaFX 8 and was built with JDK 1.8.0-b121. If you compile the sources with JDK 1.7 it could mabye work 100% without any trouble.</p>
+
+<h3>
+<a name="how-it-works" class="anchor" href="#how-it-works"><span class="octicon octicon-link"></span></a>How it works?</h3>
 
 <h3>
 <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use?</h3>
 
-<p><code>Test</code></p>
+<p>The installation of ScreenFX is very easy. All you need is to call:
+<code>
+Button button = new Button("Show ScreenFX");
+ScreenFX screenFX = new ScreenFX();
+screenFX.install(button);
+</code>
+If you want more access to ScreenFX you can adjust some properties (as listed in the features list):
+<code>
+Button button = new Button("Show ScreenFX");
+Properties sfxProperties = ScreenFX.getScreenFXProperties();
+sfxProperties.put("UIConventionOverride", new Boolean(false));
+sfxProperties.put("allowTooltips", new Boolean(true));
+sfxProperties.put("exitDelayTime", new Long(200l));
+sfxProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.D, KeyCombination.SHIFT_DOWN));
+screenFX.setScreenFXProperties(sfxProperties);
+screenFX.install(button);
+</code></p>
 
 <p><img src="http://image-upload.de/image/3Bq9nR/384acc8dba.png" alt=" "><img src="http://image-upload.de/image/CyzLs8/8a2f142ed9.png" alt=" "><img src="http://image-upload.de/image/LYPK5Z/20203b1f6e.png" alt=" "><img src="http://image-upload.de/image/sRjc2Q/47894edb35.png" alt=" "><img src="http://image-upload.de/image/NEe4sB/6eae86a6d4.png" alt=" "><img src="http://image-upload.de/image/GymRZL/51ff5c1635.png" alt=" "><img src="http://image-upload.de/image/NwIPzY/f170eaedaf.png" alt=" "><img src="http://image-upload.de/image/6kWHVC/afa4d056b9.png" alt=" "><img src="http://image-upload.de/image/PhLADc/1e51a41326.png" alt=" "></p>
 
@@ -48,7 +70,6 @@
 <ul>
 <li>compatible up to 9 screens (cubic layout, master screen in middle of cube)</li>
 <li>lang support german + english</li>
-<li>written for JavaFX 8 with JDK 1.8.0-b121</li>
 <li>should be compatible with all operating systems (tested only Windows 7/8/8.1)</li>
 <li>includes calculations for maximum real screen size or the screen size respecting elements like windows taskbar which reduce the area for resizing windows</li>
 <li>global configuration options which are:
