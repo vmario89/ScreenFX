@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="ScreenFX : A plugin library for JavaFX 8 adding features for resizing and arranging stage windows for multiple screens" />
+    <meta name="description" content="ScreenFX : A plugin library for JavaFX 8 adding features to resize and arrange stage windows for multiple screens" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/vmario89/ScreenFX">View on GitHub</a>
 
           <h1 id="project_title">ScreenFX</h1>
-          <h2 id="project_tagline">A plugin library for JavaFX 8 adding features for resizing and arranging stage windows for multiple screens</h2>
+          <h2 id="project_tagline">A plugin library for JavaFX 8 adding features to resize and arrange stage windows for multiple screens</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/vmario89/ScreenFX/zipball/master">Download this project as a .zip file</a>
@@ -44,7 +44,7 @@
 <h2>
 <a name="editors-note" class="anchor" href="#editors-note"><span class="octicon octicon-link"></span></a>Editor's note</h2>
 
-<p>This tool is inspired originally by the tool "Asus Multiframe" which was only capable to handle two screens.</p>
+<p>This tool is inspired originally by the tool "Asus Multiframe" which was only capable to handle two screens. As the tool multiframe does not work an java applications and because of the screen number limitation i decided to write my own tool box.</p>
 
 <h2>
 <a name="project-requirements" class="anchor" href="#project-requirements"><span class="octicon octicon-link"></span></a>Project requirements</h2>
@@ -56,13 +56,15 @@
 
 <p>ScreenFX will read out your current system hardware configuration for screen devices and will create a grid layout:</p>
 
-<p><img src="http://image-upload.de/image/LYPK5Z/20203b1f6e.png" alt="User interface convention: no abilities in fullscreen mode"></p>
-
 <p><img src="http://image-upload.de/image/CyzLs8/8a2f142ed9.png" alt="The system layout"><img src="http://image-upload.de/image/3Bq9nR/384acc8dba.png" alt="The grid layout read from system configuration"></p>
 
 <p>As you can see the layout reacts on the total count of screens. If only one screen is available, ScreenFX will only show one (the default colored main screen #1). If more screens are installed all secondary screens get a darker color than screen #1.</p>
 
 <p><img src="http://image-upload.de/image/NwIPzY/f170eaedaf.png" alt="1 screen"><img src="http://image-upload.de/image/NEe4sB/6eae86a6d4.png" alt="2 screens"></p>
+
+<p>There's also an integrated convention which disallows the user to resize and arrange the window if it is pushed to fullscreen mode:</p>
+
+<p><img src="http://image-upload.de/image/LYPK5Z/20203b1f6e.png" alt="User interface convention: no abilities in fullscreen mode"></p>
 
 <h2>
 <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use?</h2>
