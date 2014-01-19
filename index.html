@@ -57,7 +57,7 @@
 <h3>
 <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use?</h3>
 
-<p>The installation of ScreenFX is very easy. All you need is to call:</p>
+<p>The installation of ScreenFX is very easy. All you need is to bind the screenfx-.jar into your project and call:</p>
 
 <pre>
 Button button = new Button("Show ScreenFX");
@@ -73,10 +73,13 @@ Properties sfxProperties = ScreenFX.getScreenFXProperties();
 sfxProperties.put("UIConventionOverride", new Boolean(false));
 sfxProperties.put("allowTooltips", new Boolean(true));
 sfxProperties.put("exitDelayTime", new Long(200l));
-sfxProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.D, KeyCombination.SHIFT_DOWN));
+sfxProperties.put("popupKeyCodeCombination", 
+    new KeyCodeCombination(KeyCode.D, KeyCombination.SHIFT_DOWN));
 screenFX.setScreenFXProperties(sfxProperties);
 screenFX.install(button);
 </pre>
+
+<p>ScreenFX can be used with normal builder-like source code as well as using with FXML and a controller class. You can directly install ScreenFX into the initialize() method of your controller. See the example distributed with the library.</p>
 
 <p><img src="http://image-upload.de/image/3Bq9nR/384acc8dba.png" alt=" "><img src="http://image-upload.de/image/CyzLs8/8a2f142ed9.png" alt=" "><img src="http://image-upload.de/image/LYPK5Z/20203b1f6e.png" alt=" "><img src="http://image-upload.de/image/sRjc2Q/47894edb35.png" alt=" "><img src="http://image-upload.de/image/GymRZL/51ff5c1635.png" alt=" "><img src="http://image-upload.de/image/NwIPzY/f170eaedaf.png" alt=" "><img src="http://image-upload.de/image/6kWHVC/afa4d056b9.png" alt=" "><img src="http://image-upload.de/image/PhLADc/1e51a41326.png" alt=" "></p>
 
