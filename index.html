@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="ScreenFX : A plugin library for JavaFX 8 adding features for resizing and arranging stage windows for multiple screens" />
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>ScreenFX by vmario89</title>
+    <title>ScreenFX</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>ScreenFX</h1>
-        <h2>A plugin library for JavaFX 8 adding features for resizing and arranging stage windows for multiple screens</h2>
-        <a href="https://github.com/vmario89/ScreenFX" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/vmario89/ScreenFX">View on GitHub</a>
+
+          <h1 id="project_title">ScreenFX</h1>
+          <h2 id="project_tagline">A plugin library for JavaFX 8 adding features for resizing and arranging stage windows for multiple screens</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/vmario89/ScreenFX/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/vmario89/ScreenFX/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>
 <a name="editors-note" class="anchor" href="#editors-note"><span class="octicon octicon-link"></span></a>Editor's note</h3>
 
 <p>This tool is inspired originally by the tool "Asus Multiframe" which was only capable to handle two screens.</p>
@@ -44,14 +47,17 @@
 <h3>
 <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use?</h3>
 
-<p>The installation of ScreenFX is very easy. All you need is to call:
-<code>
+<p>The installation of ScreenFX is very easy. All you need is to call:</p>
+
+<pre>
 Button button = new Button("Show ScreenFX");
 ScreenFX screenFX = new ScreenFX();
 screenFX.install(button);
-</code>
-If you want more access to ScreenFX you can adjust some properties (as listed in the features list):
-<code>
+</pre>
+
+<p>If you want more access to ScreenFX you can adjust some properties (as listed in the features list):</p>
+
+<pre>
 Button button = new Button("Show ScreenFX");
 Properties sfxProperties = ScreenFX.getScreenFXProperties();
 sfxProperties.put("UIConventionOverride", new Boolean(false));
@@ -60,7 +66,7 @@ sfxProperties.put("exitDelayTime", new Long(200l));
 sfxProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.D, KeyCombination.SHIFT_DOWN));
 screenFX.setScreenFXProperties(sfxProperties);
 screenFX.install(button);
-</code></p>
+</pre>
 
 <p><img src="http://image-upload.de/image/3Bq9nR/384acc8dba.png" alt=" "><img src="http://image-upload.de/image/CyzLs8/8a2f142ed9.png" alt=" "><img src="http://image-upload.de/image/LYPK5Z/20203b1f6e.png" alt=" "><img src="http://image-upload.de/image/sRjc2Q/47894edb35.png" alt=" "><img src="http://image-upload.de/image/NEe4sB/6eae86a6d4.png" alt=" "><img src="http://image-upload.de/image/GymRZL/51ff5c1635.png" alt=" "><img src="http://image-upload.de/image/NwIPzY/f170eaedaf.png" alt=" "><img src="http://image-upload.de/image/6kWHVC/afa4d056b9.png" alt=" "><img src="http://image-upload.de/image/PhLADc/1e51a41326.png" alt=" "></p>
 
@@ -69,7 +75,7 @@ screenFX.install(button);
 
 <ul>
 <li>compatible up to 9 screens (cubic layout, master screen in middle of cube)</li>
-<li>lang support german + english</li>
+<li>language support german + english</li>
 <li>should be compatible with all operating systems (tested only Windows 7/8/8.1)</li>
 <li>includes calculations for maximum real screen size or the screen size respecting elements like windows taskbar which reduce the area for resizing windows</li>
 <li>global configuration options which are:
@@ -90,35 +96,25 @@ screenFX.install(button);
 <li>set to fullscreen</li>
 <li>maximize window in width, height or both</li>
 <li>jump the window to each screen you want</li>
-<li>access ScreenFX through key combination (default: ctrl + s) or via button pressing (you need a JavaFX component which extends the </li>
-</ul><p>class ButtonBase)</p>
-
-<ul>
+<li>access ScreenFX through key combination (default: ctrl + s) or via button pressing (you need a JavaFX component which extends the class ButtonBase)</li>
 <li>you do not need to initialize the tool manually. you only have to install the tool once per stage. therefore minimum requirement is that the stage contains a minimum of one node</li>
 </ul><h3>
 <a name="to-do" class="anchor" href="#to-do"><span class="octicon octicon-link"></span></a>To do</h3>
 
 <h3>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/vmario89/ScreenFX/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/vmario89/ScreenFX/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/vmario89/ScreenFX"></a> is maintained by <a href="https://github.com/vmario89">vmario89</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
     </div>
 
-  
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">ScreenFX maintained by <a href="https://github.com/vmario89">vmario89</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>
