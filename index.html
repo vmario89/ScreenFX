@@ -147,10 +147,12 @@ screenFX.install(button);
 <li>create an algorithm to break the current 9 screen cubic layout to a more common flexible layout</li>
 <li>fix the checkbox height - instead of setting the font size to 10px there must be a way to style the box from checkbox in its width/height separately without styling it's label</li>
 <li>create a stylesheet which contains all the styles, effects, filters and hoverings which are currently done with hard coded event handlers</li>
-<li>add some functionality to restore window positions</li>
+<li>add some functionality to save/restore windows (position, size, visible state, stage style, fullscreenproperty, resizable true/false)</li>
+<li>modification tool for live changing of resize yes/no, change StageStyle, ...</li>
 <li>change the time a tooltip is displayed before it's going to automatically hides</li>
 <li>put some try-catch methods into code to grant more stability</li>
 <li>fix issue that taskbar checkbox does not work when popup appears a second time</li>
+<li>fix fullscreen issue: if the primary stage is in fullscreen and another stage gets into fullscreen the first hides and does not reappear -&gt; disable fullscreen buttons for all other screen if one of the screens has set active fullscreen property. There also needs to be checked if the window is still visible if it was visible before</li>
 <li>save taskbar checkbox value from last usage into properties so that next popup will take last check values</li>
 <li>add javadoc</li>
 </ul><h2>
