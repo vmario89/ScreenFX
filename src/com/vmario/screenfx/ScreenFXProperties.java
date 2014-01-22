@@ -19,17 +19,11 @@
  */
 package com.vmario.screenfx;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -46,12 +40,21 @@ import javafx.scene.input.KeyCombination;
 class ScreenFXProperties extends Properties {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = Logger.getLogger(ScreenFXProperties.class.getName());
+	private static List<Boolean> taskbarIncludeSelectedProperties = new ArrayList<Boolean>(9);
+	private static List<Boolean> taskbarIncludeIndeterminateProperties = new ArrayList<Boolean>(9);
 
 	/**
 	 * 
 	 */
 	public ScreenFXProperties() {
+		for (int i = 0; i < 9; i++) {
+			/*
+			 * initialize taskbar selection standards
+			 */
+			taskbarIncludeSelectedProperties.add(new Boolean(true));
+			// do not put on changable properties!
+			taskbarIncludeIndeterminateProperties.add(new Boolean(false));
+		}
 		put("resourceBundle",
 				ResourceBundle.getBundle("com.vmario.screenfx.resource.languages.lang", Locale.getDefault()));
 		put("UIConventionOverride", new Boolean(false));
@@ -59,43 +62,21 @@ class ScreenFXProperties extends Properties {
 		put("exitDelayTime", new Long(350l));
 		put("iconSet", new ArrayList<ImageView>());
 		put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+		/*
+		 * just hold down ctrl when already activated the popup with ctrl + s
+		 */
+		put("quickResizeKeyCodeCombination", KeyCode.CONTROL);
+		/*
+		 * *just hold down ctrl when already activated the popup with ctrl + s
+		 */
+		put("activateTaskbarKeyCodeCombination", KeyCode.SHIFT);
+		/*
+		 * an array of size(9). Throw an error if array is too small
+		 */
+		put("taskbarIncludeSelected", taskbarIncludeSelectedProperties);
 	}
 
-	/**
-	 * 
-	 * @param file
-	 *            the target file to read in
-	 * @return the properties. returns null if an error occures
-	 */
-	public Properties deserializeXML(File file) {
-		try {
-			logger.log(Level.INFO, "deserializing from " + file.getPath());
-			XMLDecoder d = new XMLDecoder(new FileInputStream(file));
-			Properties p = (Properties) d.readObject();
-			d.close();
-			return p;
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "error while deserializing " + file.getName(), e);
-			return null;
-		}
+	static List<Boolean> getTaskbarIncludeIndeterminateProperties() {
+		return taskbarIncludeIndeterminateProperties;
 	}
-
-	/**
-	 * 
-	 * @param properties
-	 *            the properties to write out to file
-	 * @param file
-	 *            the file
-	 */
-	public void serializeXML(Properties properties, File file) {
-		try {
-			logger.log(Level.INFO, "serializing to " + file.getPath());
-			XMLEncoder e = new XMLEncoder(new FileOutputStream(file));
-			e.writeObject(properties);
-			e.close();
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "error while seserializing " + file.getName(), e);
-		}
-	}
-
 }

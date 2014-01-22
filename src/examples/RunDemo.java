@@ -1,6 +1,5 @@
 package examples;
 
-
 import java.util.Locale;
 
 import javafx.application.Application;
@@ -25,21 +24,21 @@ public class RunDemo extends Application {
 	public void start(final Stage stage) {
 		try {
 			Stage stage1 = stage;
+			stage1.setResizable(true);
 			stage1.setWidth(300);
 			stage1.setHeight(300);
 			stage1.setX(200);
 			stage1.setY(200);
 			stage1.initStyle(StageStyle.DECORATED);
 			stage1.setTitle("ScreenFX 1. stage");
-			stage1.setScene(new Scene(FXMLLoader.load(getClass().getResource(
-					"/examples/RunDemo.fxml"))));
+			stage1.setScene(new Scene(FXMLLoader.load(getClass().getResource("/examples/RunDemo.fxml"))));
 			stage1.show();
 
 			Stage infoStage = new Stage(StageStyle.UNIFIED);
 			infoStage.setTitle("ScreenFX info box");
 			AnchorPane secondaryStageRoot = new AnchorPane();
 			TextArea description = new TextArea(
-					"This stage does not react on ScreenFX events as you can recognize. Just press [Shift + D] as it is defined in the 1. stage and try it out on all the stages");
+					"This stage does not react on ScreenFX events as you can recognize. Just press [Ctrl + S] as it is defined in the 1. stage and try it out on all the stages");
 			description.setEditable(false);
 			description.setWrapText(true);
 			AnchorPane.setBottomAnchor(description, 0d);

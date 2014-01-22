@@ -42,13 +42,13 @@ class ScreenFXGridElement extends Button {
 	 */
 
 	/**
-	 * @param rowIndex
-	 * @param columnIndex
-	 * @param buttonId
-	 * @param buttonSize
-	 * @param buttonIcon
-	 * @param toolTipText
-	 * @param positionAction
+	 * @param rowIndex the row index of the button in grid
+	 * @param columnIndex the column index of the button in grid
+	 * @param buttonId the button id
+	 * @param buttonSize the button size (width and height in pixel)
+	 * @param buttonIcon the button icon
+	 * @param toolTipText the text for tooltip
+	 * @param positionAction the action to perform
 	 */
 	public ScreenFXGridElement(int rowIndex, int columnIndex, String buttonId, int buttonSize,
 			ImageView buttonIcon, String toolTipText, ScreenFXPosition positionAction) {

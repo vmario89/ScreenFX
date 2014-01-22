@@ -20,6 +20,8 @@
 package examples;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -27,9 +29,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 
 import com.vmario.screenfx.ScreenFX;
@@ -47,25 +46,40 @@ public class ScreenFXDemo implements Initializable {
 
 	@FXML
 	private AnchorPane anchorPaneRoot;
- 
+
 	@FXML
 	private Button buttonShowScreenFX;
 
 	@FXML
 	private ToggleButton toggleButtonScreenFX;
 
-	@Override 
+	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// make a new ScreenFX object
 		ScreenFX screenFX = new ScreenFX();
 
 		// put some static properties to override the standard one's
 		Properties sfxProperties = ScreenFX.getScreenFXProperties();
-		sfxProperties.put("UIConventionOverride", new Boolean(true));
+		sfxProperties.put("UIConventionOverride", new Boolean(false));
 		sfxProperties.put("allowTooltips", new Boolean(true));
 		sfxProperties.put("exitDelayTime", new Long(200l));
-		sfxProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.D,
-				KeyCombination.SHIFT_DOWN));
+		List<Boolean> taskbarStandards = new ArrayList<Boolean>();
+		taskbarStandards.add(new Boolean(false));
+		taskbarStandards.add(new Boolean(true));
+		sfxProperties.put("taskbarIncludeSelected", taskbarStandards);
+		// sfxProperties.put("popupKeyCodeCombination", new
+		// KeyCodeCombination(KeyCode.D,
+		// KeyCombination.SHIFT_DOWN)); //example of a key combination
+		// sfxProperties.remove("popupKeyCodeCombination");
+		// sfxProperties.put("popupKeyCodeCombination", KeyCode.D); // example
+		// for
+		// // single
+		// // key
+		// sfxProperties.put("quickResizeKeyCodeCombination", KeyCode.B); //
+		// example
+		// for
+		// single
+		// key
 		screenFX.setScreenFXProperties(sfxProperties);
 
 		// install ScreenFX to some nodes

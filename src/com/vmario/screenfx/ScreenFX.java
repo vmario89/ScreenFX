@@ -25,6 +25,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -32,6 +33,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -59,47 +61,81 @@ import javafx.stage.Stage;
  * 
  */
 public class ScreenFX {
+	private static final Logger logger = Logger.getLogger(ScreenFX.class.getName());
+
 	// one property set for all instances
 	private static ScreenFXProperties screenFXProperties = new ScreenFXProperties();
-	private ScreenFXPopup sfxPopup;
-	private Stage stage;
+	private static ScreenFXPopup screenFXPopup;
+	private static Stage stage;
+	private final static String resourcePath = "/com/vmario/screenfx/resource/";
 
 	/**
 	 * @param node
-	 *            the only thing you need is a node for installation of
-	 *            ScreenFX. If the node is instance of "ButtonBase" then an
-	 *            action event plus tooltip is automatically tied to the node
+	 *            the only thing you need is a node (for example an AnchorPane)
+	 *            for installation of ScreenFX. If the node is instance of
+	 *            "ButtonBase" then an action event plus tooltip is
+	 *            automatically tied to the node
 	 */
 	public void install(Node node) {
-
 		final FutureTask<Object> screenFXInstallationTask = new FutureTask<Object>(new Callable<Object>() {
 			@Override
 			public Object call() throws Exception {
-
 				ResourceBundle resourceBundle = (ResourceBundle) screenFXProperties.get("resourceBundle");
 				stage = (Stage) node.getScene().getWindow();
 
-				System.out.println(node.getClass().getSimpleName());
+				/*
+				 * check if a single key or key combination for event handling
+				 * is defined
+				 */
+				if (screenFXProperties.get("popupKeyCodeCombination") != null) {
+					node.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
-				node.setOnKeyPressed(new EventHandler<KeyEvent>() {
-					@Override
-					public void handle(KeyEvent t) {
-						if (((KeyCodeCombination) screenFXProperties.get("popupKeyCodeCombination")).match(t)) {
-							t.consume();
-							showScreenFX();
+						@Override
+						public void handle(KeyEvent event) {
+							if (screenFXProperties.get("popupKeyCodeCombination") instanceof KeyCodeCombination) {
+								if (((KeyCodeCombination) screenFXProperties.get("popupKeyCodeCombination"))
+										.match(event)) {
+									event.consume();
+									showScreenFX();
+								}
+							}
+							if (screenFXProperties.get("popupKeyCodeCombination") instanceof KeyCode) {
+								if (((KeyCode) screenFXProperties.get("popupKeyCodeCombination")) == event
+										.getCode()) {
+
+									event.consume();
+									showScreenFX();
+								}
+							}
 						}
-					}
-				});
+					});
+				}
 				if (node instanceof ButtonBase) {
 					/*
 					 * set the tooltip - dependend on os the tooltip will expand
 					 * for additional information
 					 */
 					if ((boolean) screenFXProperties.get("allowTooltips")) {
-						String screenFXTooltipString = java.text.MessageFormat.format(resourceBundle
-								.getString("screenfxtooltip"),
-								new Object[] { ((KeyCodeCombination) screenFXProperties
-										.get("popupKeyCodeCombination")).toString() });
+						String screenFXTooltipString = "";
+						if (screenFXProperties.get("popupKeyCodeCombination") != null) {
+
+							if (screenFXProperties.get("popupKeyCodeCombination") instanceof KeyCodeCombination) {
+								screenFXTooltipString = java.text.MessageFormat.format(resourceBundle
+										.getString("screenfxtooltipkey"),
+										new Object[] { ((KeyCodeCombination) screenFXProperties
+												.get("popupKeyCodeCombination")).toString() })
+										+ "\n";
+							}
+							if (screenFXProperties.get("popupKeyCodeCombination") instanceof KeyCode) {
+								screenFXTooltipString = java.text.MessageFormat.format(resourceBundle
+										.getString("screenfxtooltipkey"),
+										new Object[] { ((KeyCode) screenFXProperties
+												.get("popupKeyCodeCombination")).getName() })
+										+ "\n";
+							}
+						}
+						screenFXTooltipString += resourceBundle.getString("screenfxtooltip");
+
 						List<String> osNamesAdditionalHint = new ArrayList<String>();
 						osNamesAdditionalHint.add("Windows 7");
 						osNamesAdditionalHint.add("Windows 8");
@@ -129,13 +165,13 @@ public class ScreenFX {
 
 	private void showScreenFX() {
 		try {
-			if (sfxPopup != null) {
-				if (sfxPopup.isShowing()) {
-					sfxPopup.hide();
+			if (screenFXPopup != null) {
+				if (screenFXPopup.isShowing()) {
+					screenFXPopup.hide();
 				}
 			}
-			sfxPopup = new ScreenFXPopup(stage);
-			sfxPopup.show(stage);
+			screenFXPopup = new ScreenFXPopup();
+			screenFXPopup.show(stage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,5 +190,23 @@ public class ScreenFX {
 	 */
 	public void setScreenFXProperties(Properties screenFXProperties) {
 		ScreenFX.screenFXProperties = (ScreenFXProperties) screenFXProperties;
+	}
+
+	static ScreenFXPopup getScreenFXPopup() {
+		return screenFXPopup;
+	}
+
+	/**
+	 * @return the stage
+	 */
+	public static Stage getStage() {
+		return stage;
+	}
+
+	/**
+	 * @return the resource path
+	 */
+	public static String getResourcePath() {
+		return resourcePath;
 	}
 }

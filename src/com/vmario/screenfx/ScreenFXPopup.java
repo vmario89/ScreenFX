@@ -28,18 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -55,7 +51,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 /**
@@ -63,24 +58,12 @@ import javafx.stage.WindowEvent;
  * 
  */
 public class ScreenFXPopup extends Popup {
-	// IconSet aus IconSetList
-	// CustomStyleSheet
-	// Shortcut
-
-	private Stage stage;
-	private final String resourcePath = "/com/vmario/screenfx/resource/";
 	private Service<Void> delayService;
 
-	// make a popup with a oneclick lifecycle -> create always new popup; on
-	// crit error hide popup (e.g. screen from current hardware set removed)
-
 	/**
-	 * 
-	 * @param stage
-	 *            the stage to show on
+	 * make a popup with a oneclick lifecycle to create always new popup
 	 */
-	public ScreenFXPopup(Stage stage) {
-		this.stage = stage;
+	public ScreenFXPopup() {
 
 		if ((Long) ScreenFX.getScreenFXProperties().get("exitDelayTime") != null) {
 			delayService = new ScreenFXDelayService((Long) ScreenFX.getScreenFXProperties().get(
@@ -198,7 +181,7 @@ public class ScreenFXPopup extends Popup {
 		 * create a 12 button control grid + other controls for each
 		 * screenGridPane using ScreenFXGridAllocator
 		 */
-		for (int i = 0; i < screenAnchorPanes.size(); i++) {
+		for (int screenNr = 0; screenNr < screenAnchorPanes.size(); screenNr++) {
 			GridPane buttonGridPane = new GridPane();
 			buttonGridPane.setGridLinesVisible(false);
 			int buttonSize = 15;
@@ -208,57 +191,14 @@ public class ScreenFXPopup extends Popup {
 			buttonGridPane.setMaxWidth(3 * (buttonGap + buttonSize));
 			buttonGridPane.setMaxHeight(4 * (buttonGap + buttonSize));
 
-			/*
-			 * taskbar checkbox
-			 */
-			CheckBox taskBarCheckBox = new CheckBox();
-			ImageView taskBarCheckBoxIcon = new ImageView(this.getClass()
-					.getResource(resourcePath + "taskbar.png").toExternalForm());
-			taskBarCheckBox.setGraphic(taskBarCheckBoxIcon);
-			taskBarCheckBox.setMinHeight(buttonSize);
-			taskBarCheckBox.setMinWidth(buttonSize);
-			taskBarCheckBox.setMaxHeight(buttonSize);
-			taskBarCheckBox.setMaxWidth(buttonSize);
-			taskBarCheckBox.setStyle("-fx-font-size:10;");
-
-			// ui convention
-			if (!(boolean) ScreenFX.getScreenFXProperties().get("UIConventionOverride")) {
-				taskBarCheckBox.setDisable(stage.fullScreenProperty().get());
-				stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
-					@Override
-					public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-							Boolean newValue) {
-						taskBarCheckBox.setDisable(newValue);
-					}
-				});
-			}
-			
-			Glow glow = new Glow(0.5);
-			taskBarCheckBox.setOnMouseEntered(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent arg0) {
-					taskBarCheckBox.setEffect(glow);
-				}
-			});
-			taskBarCheckBox.setOnMouseExited(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent arg0) {
-					taskBarCheckBox.setEffect(null);
-				}
-			});
-
-			if ((boolean) ScreenFX.getScreenFXProperties().get("allowTooltips")) {
-				taskBarCheckBox.setTooltip(new Tooltip(((ResourceBundle) ScreenFX.getScreenFXProperties()
-						.get("resourceBundle")).getString("taskbar")));
-			}
-			// save value of each checkbox to bindingsHolder
-			ScreenFXBindingsHolder.getIncludeTaskbarPropertyList().add(taskBarCheckBox.selectedProperty());
+			// taskbar checkbox
+			ScreenFXTaskbarCheckBox taskBarCheckBox = new ScreenFXTaskbarCheckBox(screenNr, buttonSize);
 
 			// overgive positioner with event related data
-			ScreenFXPositioner positioner = new ScreenFXPositioner(stage, graphicsDevices, i);
-			new ScreenFXGridAllocator(positioner, resourcePath, buttonGridPane, buttonSize);
+			ScreenFXPositioner positioner = new ScreenFXPositioner(graphicsDevices, screenNr);
+			new ScreenFXGridAllocator(positioner, buttonGridPane, buttonSize);
 
-			Label screenLabel = new Label("#" + (i + 1)); // the screen
+			Label screenLabel = new Label("#" + (screenNr + 1)); // the screen
 															// number
 															// of the
 															// iterating
@@ -266,8 +206,8 @@ public class ScreenFXPopup extends Popup {
 															// number #1
 															// is main
 															// screen
-			ImageView screenIcon = new ImageView(this.getClass().getResource(resourcePath + "screen.png")
-					.toExternalForm());
+			ImageView screenIcon = new ImageView(this.getClass()
+					.getResource(ScreenFX.getResourcePath() + "screen.png").toExternalForm());
 			screenLabel.setGraphic(screenIcon);
 			screenLabel.setMaxWidth(Double.MAX_VALUE);
 			screenLabel.setTextAlignment(TextAlignment.CENTER);
@@ -278,13 +218,13 @@ public class ScreenFXPopup extends Popup {
 			Tooltip screenInfoTooltip = new Tooltip(((ResourceBundle) ScreenFX.getScreenFXProperties().get(
 					"resourceBundle")).getString("screeninformation")
 					+ ":\n"
-					+ graphicsDevices[i].getDisplayMode().getWidth()
+					+ graphicsDevices[screenNr].getDisplayMode().getWidth()
 					+ "x"
-					+ graphicsDevices[i].getDisplayMode().getHeight()
+					+ graphicsDevices[screenNr].getDisplayMode().getHeight()
 					+ "px @"
-					+ graphicsDevices[i].getDisplayMode().getRefreshRate()
+					+ graphicsDevices[screenNr].getDisplayMode().getRefreshRate()
 					+ "Hz - "
-					+ graphicsDevices[i].getDisplayMode().getBitDepth() + "bit");
+					+ graphicsDevices[screenNr].getDisplayMode().getBitDepth() + "bit");
 
 			screenLabel.setTooltip(screenInfoTooltip);
 			HBox screenLabelCenteringHBox = new HBox(2);
@@ -293,7 +233,7 @@ public class ScreenFXPopup extends Popup {
 
 			VBox screenVBox = new VBox(2);
 			screenVBox.getChildren().addAll(buttonGridPane, taskBarCheckBox, screenLabelCenteringHBox);
-			screenAnchorPanes.get(i).getChildren().add(screenVBox);
+			screenAnchorPanes.get(screenNr).getChildren().add(screenVBox);
 		}
 		topAnchorPane.getChildren().add(screenGridPane);
 		getContent().addAll(topAnchorPane);
@@ -342,22 +282,5 @@ public class ScreenFXPopup extends Popup {
 				borderRectangle.setHeight(getHeight());
 			}
 		});
-
 	}
-
-	/**
-	 * @return the stage
-	 */
-	public Stage getStage() {
-		return stage;
-	}
-
-	/**
-	 * @param stage
-	 *            the stage
-	 */
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-
 }

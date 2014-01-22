@@ -24,16 +24,13 @@ import javafx.concurrent.Task;
 
 /**
  * @author vmario
- *
+ * 
  */
 class ScreenFXDelayService extends Service<Void> {
 	private static long exitDelayTime;
 
-	/**
-	 * @param delayBeforeClose the delay time
-	 */
-	public ScreenFXDelayService(long delayBeforeClose) {
-		ScreenFXDelayService.exitDelayTime = delayBeforeClose;
+	public ScreenFXDelayService(long exitDelayTime) {
+		ScreenFXDelayService.exitDelayTime = exitDelayTime;
 	};
 
 	@Override
@@ -48,20 +45,6 @@ class ScreenFXDelayService extends Service<Void> {
 				return null;
 			}
 		};
-	}
-
-	/**
-	 * @return the delay time
-	 */
-	public long getExitDelayTime() {
-		return exitDelayTime;
-	}
-
-	/**
-	 * @param delayBeforeClose the delay time
-	 */
-	public void setExitDelayTime(long delayBeforeClose) {
-		ScreenFXDelayService.exitDelayTime = delayBeforeClose;
 	}
 
 }
