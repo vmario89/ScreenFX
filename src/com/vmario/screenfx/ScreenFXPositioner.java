@@ -181,14 +181,16 @@ class ScreenFXPositioner {
 			}
 			break;
 
-		case RESIZE_HEIGHT:
+		case RESIZE_HEIGHT:	
 			ScreenFX.getStage().setHeight(dimY);
+			ScreenFX.getStage().setX(posX);
 			ScreenFX.getStage().setY(posY);
 			break;
 
 		case RESIZE_WIDTH:
 			ScreenFX.getStage().setWidth(dimX);
 			ScreenFX.getStage().setX(posX);
+			ScreenFX.getStage().setY(posY);
 			break;
 		case FULLSCREEN:
 			/*
