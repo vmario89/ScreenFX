@@ -39,7 +39,9 @@
 <h2>
 <a name="what-is-screenfx" class="anchor" href="#what-is-screenfx"><span class="octicon octicon-link"></span></a>What is ScreenFX?</h2>
 
-<p>ScreenFX is a library for JavaFX 8 which allows you to install a small and lightweight popup container to your application stages. This popup has abilities to handle positioning and resizing events of each stage. Please read further to learn how to use.</p>
+<p>ScreenFX is a library for JavaFX 8 which allows you to install a small and lightweight popup container to your application stages. This popup has abilities to handle positioning and resizing events of each stage. Please read further to </p>
+
+<p>learn how to use.</p>
 
 <p><img src="http://image-upload.de/image/GGJRtP/b8a617e1ee.jpg" alt="quartered stages example"></p>
 
@@ -50,7 +52,14 @@
 <h2>
 <a name="editors-note" class="anchor" href="#editors-note"><span class="octicon octicon-link"></span></a>Editor's note</h2>
 
-<p>This tool is inspired originally by the tool "Asus Multiframe" which was only capable to handle two screens. As the tool multiframe does not work an java applications and because of the screen number limitation i decided to write my own tool box.</p>
+<p>This tool is inspired originally by the tool "Asus Multiframe" which was only capable to handle two screens. As the tool multiframe does not work an java applications and because of the screen number limitation i decided to write my own </p>
+
+<p>tool box.</p>
+
+<h2>
+<a name="planned-releases" class="anchor" href="#planned-releases"><span class="octicon octicon-link"></span></a>Planned releases</h2>
+
+<p>Please have a look at the big "to do" list. The next release will be very soon (end of january 2014)</p>
 
 <h2>
 <a name="project-requirements" class="anchor" href="#project-requirements"><span class="octicon octicon-link"></span></a>Project requirements</h2>
@@ -64,7 +73,9 @@
 
 <p><img src="http://image-upload.de/image/CyzLs8/8a2f142ed9.png" alt="The system layout"><img src="http://image-upload.de/image/3Bq9nR/384acc8dba.png" alt="The grid layout read from system configuration"></p>
 
-<p>As you can see the layout reacts on the total count of screens. If only one screen is available, ScreenFX will only show one (the default colored main screen #1). If more screens are installed all secondary screens get a darker color than screen #1.</p>
+<p>As you can see the layout reacts on the total count of screens. If only one screen is available, ScreenFX will only show one (the default colored main screen #1). If more screens are installed all secondary screens get a darker color </p>
+
+<p>than screen #1.</p>
 
 <p><img src="http://image-upload.de/image/NwIPzY/f170eaedaf.png" alt="1 screen"><img src="http://image-upload.de/image/NEe4sB/6eae86a6d4.png" alt="2 screens"></p>
 
@@ -75,7 +86,9 @@
 <h2>
 <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use?</h2>
 
-<p>The installation of ScreenFX is very easy. You do not need to initialize the tool manually. You only have to install the tool once per stage. Therefore the only requirement is that the stage contains a total minimum of one node. Tie the screenfx-current.jar into your JavaFX project and call the function like this:</p>
+<p>The installation of ScreenFX is very easy. You do not need to initialize the tool manually. You only have to install the tool once per stage. Therefore the only requirement is that the stage contains a total minimum of one node. Tie the </p>
+
+<p>screenfx-current.jar into your JavaFX project and call the function like this:</p>
 
 <pre>
 Button button = new Button("Show ScreenFX");
@@ -97,7 +110,15 @@ screenFX.setScreenFXProperties(sfxProperties);
 screenFX.install(button);
 </pre>
 
-<p>ScreenFX can be used with normal builder-like source code as well as using with FXML and a controller class. You can directly install ScreenFX into the initialize() method of your controller. See the example distributed with the library.</p>
+<p>If you want to remove the key combinations do some property remove() call like the following example shows</p>
+
+<pre>
+sfxProperties.remove("popupKeyCodeCombination");
+</pre>
+
+<p>ScreenFX can be used with normal builder-like source code as well as using with FXML and a controller class. You can directly install ScreenFX into the initialize() method of your controller. See the example distributed with the </p>
+
+<p>library.</p>
 
 <h2>
 <a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
@@ -141,32 +162,44 @@ screenFX.install(button);
 </ul><h2>
 <a name="to-do" class="anchor" href="#to-do"><span class="octicon octicon-link"></span></a>To do</h2>
 
-<p>Currently there are some features to change/add:</p>
+<h3>
+<a name="new-features" class="anchor" href="#new-features"><span class="octicon octicon-link"></span></a>New features</h3>
 
 <ul>
-<li>fix issue that when a screen gets removed from hardware while ScreenFX is shown there are some ugly nonlocatable exceptions thrown. These exceptions are thrown casually by some effects like Glow and ColorAdjust</li>
 <li>add resize effect:<a href="http://stackoverflow.com/questions/17306981/how-do-i-create-a-resize-animation-for-javafx-stage">http://stackoverflow.com/questions/17306981/how-do-i-create-a-resize-animation-for-javafx-stage</a>
 </li>
-<li>method to directly install to stage instead of node</li>
-<li>function to check if a node on which ScreenFX was installed, removed/became disabled/...</li>
-<li>add key combination to directly resize the window (1 instead of 2 mouseclicks)</li>
-<li>add key combination to directly enabled/disable taskbar include checkbox</li>
-<li>remove the feature that ScreenFX buttons get disabled in fullscreen mode. Instead reenforce normal displaying and then set size/position</li>
-<li>create an algorithm to break the current 9 screen cubic layout to a more common flexible layout</li>
-<li>fix the checkbox height - instead of setting the font size to 10px there must be a way to style the box from checkbox in its width/height separately without styling it's label</li>
+<li>add key combination to directly enabled/disable taskbar include checkbox (e.g. ctrl + shift)</li>
 <li>create a stylesheet which contains all the styles, effects, filters and hoverings which are currently done with hard coded event handlers</li>
 <li>add some functionality to save/restore windows (position, size, visible state, stage style, fullscreenproperty, resizable true/false)</li>
 <li>modification tool for live changing of resize yes/no, change StageStyle, ...</li>
+<li>build an interactive demo for all major and minor properties which have influence to ScreenFX, for example StageStyle, isResizable(), isFullsceen(), Locale, visibility; include property editor for ScreenFXProperties, add button for "create random test stages", add tab for html viewer for this github page content and/or javadoc</li>
+<li>add javadoc</li>
+<li>save taskbar checkbox value from last usage into properties so that next popup will take last check values</li>
+</ul><h3>
+<a name="features-to-change" class="anchor" href="#features-to-change"><span class="octicon octicon-link"></span></a>Features to change</h3>
+
+<ul>
+<li>remove the feature that ScreenFX buttons get disabled in fullscreen mode. Instead reenforce normal displaying and then set size/position</li>
+<li>create an algorithm to break the current 9 screen cubic layout to a more common flexible layout</li>
 <li>change the time a tooltip is displayed before it's going to automatically hides</li>
+</ul><h3>
+<a name="bug-fixingavoiding" class="anchor" href="#bug-fixingavoiding"><span class="octicon octicon-link"></span></a>Bug fixing/avoiding</h3>
+
+<ul>
+<li>fix issue that when a screen gets removed from hardware while ScreenFX is shown there are some ugly nonlocatable exceptions thrown. These exceptions are thrown casually by some effects like Glow and ColorAdjust</li>
+<li>add data validator for class ScreenFXProperties so there cannot be thrown a NullPointerException or add != null check for each property getting</li>
+<li>make a fix if activating the popup with ctrl + s and holding ctrl (or a similar key combination where the modifier is the same) there wont be set the resize doubleclick emulation event</li>
+<li>function to check if a node on which ScreenFX was installed, removed/became disabled/...</li>
+<li>fix the checkbox height - instead of setting the font size to 10px there must be a way to style the box from checkbox in its width/height separately without styling it's label</li>
 <li>put some try-catch methods into code to grant more stability</li>
 <li>fix issue that taskbar checkbox does not work when popup appears a second time</li>
-<li>fix fullscreen issue: if the primary stage is in fullscreen and another stage gets into fullscreen the first hides and does not reappear -&gt; disable fullscreen buttons for all other screen if one of the screens has set active fullscreen property. There also needs to be checked if the window is still visible if it was visible before</li>
-<li>save taskbar checkbox value from last usage into properties so that next popup will take last check values</li>
-<li>add javadoc</li>
+<li>fix fullscreen issue: if the primary stage is in fullscreen and another stage gets into fullscreen the first hides and does not reappear -&gt; disable fullscreen buttons for all other screen if one of the screens has fullscreen to trueThere also needs to be checked if the window is still visible if it was visible before</li>
 </ul><h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p><em>I would appreciate if somebody contributes to my source code. Help me making it even more functional, more stable, add some style sheets, create additional language support, fix spelling errors and  bugs in source code, etc. - Thanks, Mario Voigt - 19.01.2014</em></p>
+<p>I would appreciate if somebody contributes to my source code. Help me making it even more functional, more stable, add some style sheets, create additional language support, fix spelling errors and  bugs in source code, etc. - Thanks, </p>
+
+<p>Mario Voigt - 19.01.2014</p>
 
 <pre>
 /*
@@ -193,8 +226,6 @@ screenFX.install(button);
  * along with this program.  If not, see http://www.gnu.org/licenses/gpl-3.0.html
  */
 </pre>
-
-
       </section>
     </div>
 
@@ -206,7 +237,17 @@ screenFX.install(button);
       </footer>
     </div>
 
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-47298969-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
 
   </body>
 </html>
