@@ -1,6 +1,6 @@
 /*
  * ScreenFX - A plugin library for JavaFX 8 adding features for resizing 
- * and arranging ScreenFX.getStage() windows on a multiple screen hardware configuration
+ * and arranging stage windows on a multiple screen hardware configuration
  * 
  * Copyright (C) 2014 Mario Voigt, Ulmenstr. 35, 09112 Chemnitz, Germany, vmario@hrz.tu-chemnitz.de
  * 
@@ -24,32 +24,42 @@ import java.awt.GraphicsDevice;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.util.List;
+
+import javafx.stage.Stage;
 
 /**
  * @author vmario
  * 
  */
 class ScreenFXPositioner {
+	private final Stage stage;
 	private final GraphicsDevice[] graphicsDevices;
 	private final int screenNr;
 
 	/**
-	 * @param graphicsDevices the list of graphic devices
-	 * @param screenNr the id/number of screen
+	 * @param stage the stage to set on position
+	 * @param graphicsDevices
+	 *            the list of graphic devices
+	 * @param screenNr
+	 *            the id/number of screen
 	 */
-	public ScreenFXPositioner(GraphicsDevice[] graphicsDevices, int screenNr) {
+	public ScreenFXPositioner(Stage stage, GraphicsDevice[] graphicsDevices, int screenNr) {
 
+		this.stage = stage;
 		this.graphicsDevices = graphicsDevices;
 		this.screenNr = screenNr;
 	}
 
 	/**
 	 * 
-	 * @param sfxPosition the position to set
-	 * @param doubleClick boolean value if the user performed a single click (false) or double click (true)
+	 * @param sfxPosition
+	 *            the position to set
+	 * @param doubleClick
+	 *            boolean value if the user performed a single click (false) or
+	 *            double click (true)
+	 * @throws Exception
 	 */
-	public void setPosition(ScreenFXPosition sfxPosition, boolean doubleClick) {
+	public void setPosition(ScreenFXPosition sfxPosition, boolean doubleClick) throws Exception {
 
 		GraphicsConfiguration gc = graphicsDevices[screenNr].getDefaultConfiguration();
 		Rectangle bounds = gc.getBounds();
@@ -63,144 +73,144 @@ class ScreenFXPositioner {
 		dimY = bounds.height - screenInsets.top - screenInsets.bottom;
 
 		// overwrite values for full fit to screen
-		if (!((List<Boolean>) ScreenFX.getScreenFXProperties().get("taskbarIncludeSelected")).get(screenNr)
-				& !ScreenFXProperties.getTaskbarIncludeIndeterminateProperties().get(screenNr)) {
+
+		if (!ScreenFXConfig.getTaskbarIncludeSelectedProperties().get(screenNr)
+				& !ScreenFXConfig.taskbarIncludeIndeterminateProperties.get(screenNr)) {
 			posX = bounds.x;
 			posY = bounds.y;
 			dimX = bounds.width;
 			dimY = bounds.height;
 		}
 
-		//disable resize with double click if the stage is not resizable
-		if (!ScreenFX.getStage().isResizable()) {
+		// disable resize with double click if the stage is not resizable
+		if (!stage.isResizable()) {
 			doubleClick = false;
 		}
 
-		
 		switch (sfxPosition) {
 		case LEFT_TOP:
 			if (doubleClick) {
-				ScreenFX.getStage().setWidth(dimX / 2);
-				ScreenFX.getStage().setHeight(dimY / 2);
-				ScreenFX.getStage().setX(posX);
-				ScreenFX.getStage().setY(posY);
+				stage.setWidth(dimX / 2);
+				stage.setHeight(dimY / 2);
+				stage.setX(posX);
+				stage.setY(posY);
 			} else {
-				ScreenFX.getStage().setX(posX);
-				ScreenFX.getStage().setY(posY);
+				stage.setX(posX);
+				stage.setY(posY);
 			}
 			break;
 		case MIDDLE_TOP:
 			if (doubleClick) {
-				ScreenFX.getStage().setWidth(dimX);
-				ScreenFX.getStage().setHeight(dimY / 2);
-				ScreenFX.getStage().setX(posX);
-				ScreenFX.getStage().setY(posY);
+				stage.setWidth(dimX);
+				stage.setHeight(dimY / 2);
+				stage.setX(posX);
+				stage.setY(posY);
 			} else {
-				ScreenFX.getStage().setX(posX + (dimX / 2) - (ScreenFX.getStage().getWidth() / 2));
-				ScreenFX.getStage().setY(posY);
+				stage.setX(posX + (dimX / 2) - (stage.getWidth() / 2));
+				stage.setY(posY);
 			}
 			break;
 		case RIGHT_TOP:
 			if (doubleClick) {
-				ScreenFX.getStage().setWidth(dimX / 2);
-				ScreenFX.getStage().setHeight(dimY / 2);
-				ScreenFX.getStage().setX(posX + dimX - ScreenFX.getStage().getWidth());
-				ScreenFX.getStage().setY(posY);
+				stage.setWidth(dimX / 2);
+				stage.setHeight(dimY / 2);
+				stage.setX(posX + dimX - stage.getWidth());
+				stage.setY(posY);
 
 			} else {
-				ScreenFX.getStage().setX(posX + dimX - ScreenFX.getStage().getWidth());
-				ScreenFX.getStage().setY(posY);
+				stage.setX(posX + dimX - stage.getWidth());
+				stage.setY(posY);
 			}
 			break;
 
 		case LEFT_MIDDLE:
 			if (doubleClick) {
-				ScreenFX.getStage().setWidth(dimX / 2);
-				ScreenFX.getStage().setHeight(dimY);
-				ScreenFX.getStage().setX(posX);
-				ScreenFX.getStage().setY(posY);
+				stage.setWidth(dimX / 2);
+				stage.setHeight(dimY);
+				stage.setX(posX);
+				stage.setY(posY);
 			} else {
-				ScreenFX.getStage().setX(posX);
-				ScreenFX.getStage().setY(posY + (dimY / 2) - (ScreenFX.getStage().getHeight() / 2));
+				stage.setX(posX);
+				stage.setY(posY + (dimY / 2) - (stage.getHeight() / 2));
 			}
 			break;
 		case MIDDLE_MIDDLE:
 			if (doubleClick) {
-				ScreenFX.getStage().setWidth(dimX);
-				ScreenFX.getStage().setHeight(dimY);
-				ScreenFX.getStage().setX(posX);
-				ScreenFX.getStage().setY(posY);
+				stage.setWidth(dimX);
+				stage.setHeight(dimY);
+				stage.setX(posX);
+				stage.setY(posY);
 			} else {
-				ScreenFX.getStage().setX(posX + (dimX / 2) - (ScreenFX.getStage().getWidth() / 2));
-				ScreenFX.getStage().setY(posY + (dimY / 2) - (ScreenFX.getStage().getHeight() / 2));
+				stage.setX(posX + (dimX / 2) - (stage.getWidth() / 2));
+				stage.setY(posY + (dimY / 2) - (stage.getHeight() / 2));
 			}
 			break;
 		case RIGHT_MIDDLE:
 			if (doubleClick) {
-				ScreenFX.getStage().setWidth(dimX / 2);
-				ScreenFX.getStage().setHeight(dimY);
-				ScreenFX.getStage().setX(posX + dimX - ScreenFX.getStage().getWidth());
-				ScreenFX.getStage().setY(posY);
+				stage.setWidth(dimX / 2);
+				stage.setHeight(dimY);
+				stage.setX(posX + dimX - stage.getWidth());
+				stage.setY(posY);
 			} else {
-				ScreenFX.getStage().setX(posX + dimX - ScreenFX.getStage().getWidth());
-				ScreenFX.getStage().setY(posY + (dimY / 2) - (ScreenFX.getStage().getHeight() / 2));
+				stage.setX(posX + dimX - stage.getWidth());
+				stage.setY(posY + (dimY / 2) - (stage.getHeight() / 2));
 			}
 			break;
 
 		case LEFT_BOTTOM:
 			if (doubleClick) {
-				ScreenFX.getStage().setWidth(dimX / 2);
-				ScreenFX.getStage().setHeight(dimY / 2);
-				ScreenFX.getStage().setX(posX);
-				ScreenFX.getStage().setY(posY + dimY - ScreenFX.getStage().getHeight());
+				stage.setWidth(dimX / 2);
+				stage.setHeight(dimY / 2);
+				stage.setX(posX);
+				stage.setY(posY + dimY - stage.getHeight());
 			} else {
-				ScreenFX.getStage().setX(posX);
-				ScreenFX.getStage().setY(posY + dimY - ScreenFX.getStage().getHeight());
+				stage.setX(posX);
+				stage.setY(posY + dimY - stage.getHeight());
 			}
 			break;
 		case MIDDLE_BOTTOM:
 			if (doubleClick) {
-				ScreenFX.getStage().setWidth(dimX);
-				ScreenFX.getStage().setHeight(dimY / 2);
-				ScreenFX.getStage().setX(posX + (dimX / 2) - (ScreenFX.getStage().getWidth() / 2));
-				ScreenFX.getStage().setY(posY + dimY - ScreenFX.getStage().getHeight());
+				stage.setWidth(dimX);
+				stage.setHeight(dimY / 2);
+				stage.setX(posX + (dimX / 2) - (stage.getWidth() / 2));
+				stage.setY(posY + dimY - stage.getHeight());
 			} else {
-				ScreenFX.getStage().setX(posX + (dimX / 2) - (ScreenFX.getStage().getWidth() / 2));
-				ScreenFX.getStage().setY(posY + dimY - ScreenFX.getStage().getHeight());
+				stage.setX(posX + (dimX / 2) - (stage.getWidth() / 2));
+				stage.setY(posY + dimY - stage.getHeight());
 			}
 			break;
 		case RIGHT_BOTTOM:
 			if (doubleClick) {
-				ScreenFX.getStage().setWidth(dimX / 2);
-				ScreenFX.getStage().setHeight(dimY / 2);
-				ScreenFX.getStage().setX(posX + dimX - ScreenFX.getStage().getWidth());
-				ScreenFX.getStage().setY(posY + dimY - ScreenFX.getStage().getHeight());
+				stage.setWidth(dimX / 2);
+				stage.setHeight(dimY / 2);
+				stage.setX(posX + dimX - stage.getWidth());
+				stage.setY(posY + dimY - stage.getHeight());
 			} else {
-				ScreenFX.getStage().setX(posX + dimX - ScreenFX.getStage().getWidth());
-				ScreenFX.getStage().setY(posY + dimY - ScreenFX.getStage().getHeight());
+				stage.setX(posX + dimX - stage.getWidth());
+				stage.setY(posY + dimY - stage.getHeight());
 			}
 			break;
 
-		case RESIZE_HEIGHT:	
-			ScreenFX.getStage().setHeight(dimY);
-			ScreenFX.getStage().setX(posX);
-			ScreenFX.getStage().setY(posY);
+		case RESIZE_HEIGHT:
+			stage.setHeight(dimY);
+			stage.setX(posX);
+			stage.setY(posY);
 			break;
 
 		case RESIZE_WIDTH:
-			ScreenFX.getStage().setWidth(dimX);
-			ScreenFX.getStage().setX(posX);
-			ScreenFX.getStage().setY(posY);
+			stage.setWidth(dimX);
+			stage.setX(posX);
+			stage.setY(posY);
 			break;
 		case FULLSCREEN:
 			/*
 			 * set correct screen for applying fullscreenmode - the fullscreen
 			 * mode will be applied with ActionEvent in ScreenFXGridAllocator!
 			 */
-			ScreenFX.getStage().setWidth(dimX);
-			ScreenFX.getStage().setHeight(dimY);
-			ScreenFX.getStage().setX(posX);
-			ScreenFX.getStage().setY(posY);
+			stage.setWidth(dimX);
+			stage.setHeight(dimY);
+			stage.setX(posX);
+			stage.setY(posY);
 			break;
 
 		default:
@@ -214,6 +224,10 @@ class ScreenFXPositioner {
 	 */
 	public int getScreenNr() {
 		return screenNr;
+	}
+
+	Stage getStage() {
+		return stage;
 	}
 
 }

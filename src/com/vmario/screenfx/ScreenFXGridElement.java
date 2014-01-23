@@ -42,13 +42,20 @@ class ScreenFXGridElement extends Button {
 	 */
 
 	/**
-	 * @param rowIndex the row index of the button in grid
-	 * @param columnIndex the column index of the button in grid
-	 * @param buttonId the button id
-	 * @param buttonSize the button size (width and height in pixel)
-	 * @param buttonIcon the button icon
-	 * @param toolTipText the text for tooltip
-	 * @param positionAction the action to perform
+	 * @param rowIndex
+	 *            the row index of the button in grid
+	 * @param columnIndex
+	 *            the column index of the button in grid
+	 * @param buttonId
+	 *            the button id
+	 * @param buttonSize
+	 *            the button size (width and height in pixel)
+	 * @param buttonIcon
+	 *            the button icon
+	 * @param toolTipText
+	 *            the text for tooltip
+	 * @param positionAction
+	 *            the action to perform
 	 */
 	public ScreenFXGridElement(int rowIndex, int columnIndex, String buttonId, int buttonSize,
 			ImageView buttonIcon, String toolTipText, ScreenFXPosition positionAction) {
@@ -57,7 +64,7 @@ class ScreenFXGridElement extends Button {
 		this.sfxPosition = positionAction;
 		setText("");
 
-		if ((boolean) ScreenFX.getScreenFXProperties().get("allowTooltips")) {
+		if (ScreenFXConfig.isAllowTooltips()) {
 			if (toolTipText != null & !toolTipText.isEmpty()) {
 				setTooltip(new Tooltip(toolTipText));
 			}
@@ -77,14 +84,14 @@ class ScreenFXGridElement extends Button {
 		setOnMouseEntered(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
-					setEffect(glow);
+				setEffect(glow);
 			}
 		});
 
 		setOnMouseExited(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
-					setEffect(null);
+				setEffect(null);
 			}
 		});
 

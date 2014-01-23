@@ -37,46 +37,85 @@ import javafx.scene.input.KeyCombination;
  * @author vmario
  * 
  */
-class ScreenFXProperties extends Properties {
+public class ScreenFXConfig extends Properties {
 	private static final long serialVersionUID = 1L;
+	static ScreenFXConfig instance = null;
 
+	static List<Boolean> taskbarIncludeIndeterminateProperties = new ArrayList<Boolean>(9);
+
+	/*
+	 * for public access through getters/setters
+	 */
+	private static String resourcePath = "";
 	private static List<Boolean> taskbarIncludeSelectedProperties = new ArrayList<Boolean>(9);
-	private static List<Boolean> taskbarIncludeIndeterminateProperties = new ArrayList<Boolean>(9);
+	private static boolean allowTooltips = true;
+	private static long exitDelayTime = 350l;
+	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"com.vmario.screenfx.resource.languages.lang", Locale.getDefault());
 
 	/**
-	 * 
+	 * @return get the singleton instance
 	 */
-	public ScreenFXProperties() {
+	public static ScreenFXConfig getInstance() {
+		if (instance == null) {
+			instance = new ScreenFXConfig();
+		}
+		return instance;
+	}
+
+	private ScreenFXConfig() {
 		for (int i = 0; i < 9; i++) {
 			/*
 			 * initialize taskbar selection standards
 			 */
 			taskbarIncludeSelectedProperties.add(new Boolean(true));
-			// do not put on changable properties!
 			taskbarIncludeIndeterminateProperties.add(new Boolean(false));
 		}
-		put("resourceBundle",
-				ResourceBundle.getBundle("com.vmario.screenfx.resource.languages.lang", Locale.getDefault()));
-		put("UIConventionOverride", new Boolean(false));
-		put("allowTooltips", new Boolean(true));
-		put("exitDelayTime", new Long(350l));
+
 		put("iconSet", new ArrayList<ImageView>());
 		put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
-		/*
-		 * just hold down ctrl when already activated the popup with ctrl + s
-		 */
 		put("quickResizeKeyCodeCombination", KeyCode.CONTROL);
-		/*
-		 * *just hold down ctrl when already activated the popup with ctrl + s
-		 */
 		put("activateTaskbarKeyCodeCombination", KeyCode.SHIFT);
-		/*
-		 * an array of size(9). Throw an error if array is too small
-		 */
-		put("taskbarIncludeSelected", taskbarIncludeSelectedProperties);
 	}
 
-	static List<Boolean> getTaskbarIncludeIndeterminateProperties() {
-		return taskbarIncludeIndeterminateProperties;
+	static String getResourcePath() {
+		return resourcePath;
 	}
+
+	static List<Boolean> getTaskbarIncludeSelectedProperties() {
+		return taskbarIncludeSelectedProperties;
+	}
+
+	static boolean isAllowTooltips() {
+		return allowTooltips;
+	}
+
+	static long getExitDelayTime() {
+		return exitDelayTime;
+	}
+
+	static ResourceBundle getResourceBundle() {
+		return resourceBundle;
+	}
+
+	static void setResourcePath(String resourcePath) {
+		ScreenFXConfig.resourcePath = resourcePath;
+	}
+
+	static void setTaskbarIncludeSelectedProperties(List<Boolean> taskbarIncludeSelectedProperties) {
+		ScreenFXConfig.taskbarIncludeSelectedProperties = taskbarIncludeSelectedProperties;
+	}
+
+	static void setAllowTooltips(boolean allowTooltips) {
+		ScreenFXConfig.allowTooltips = allowTooltips;
+	}
+
+	static void setExitDelayTime(long exitDelayTime) {
+		ScreenFXConfig.exitDelayTime = exitDelayTime;
+	}
+
+	static void setResourceBundle(ResourceBundle resourceBundle) {
+		ScreenFXConfig.resourceBundle = resourceBundle;
+	}
+
 }

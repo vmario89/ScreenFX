@@ -19,9 +19,6 @@
  */
 package com.vmario.screenfx;
 
-import java.util.List;
-import java.util.ResourceBundle;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -29,10 +26,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * @author vmario
@@ -40,13 +36,17 @@ import javafx.scene.input.MouseEvent;
  */
 public class ScreenFXTaskbarCheckBox extends CheckBox {
 	/**
-	 * 
+	 * @param stage
+	 *            the stage to apply on
 	 * @param screenNr
 	 *            needed to know in which index of array you habe to save the
 	 *            taskbar selected property
-	 * @param buttonSize the button size (height and width in pixel)
+	 * @param buttonSize
+	 *            the button size (height and width in pixel)
+	 * @throws Exception
+	 *             push exceptions
 	 */
-	ScreenFXTaskbarCheckBox(int screenNr, int buttonSize) {
+	ScreenFXTaskbarCheckBox(Stage stage, int screenNr, int buttonSize) throws Exception {
 		ImageView taskBarCheckBoxIcon = new ImageView(this.getClass()
 				.getResource(ScreenFX.getResourcePath() + "taskbar.png").toExternalForm());
 		setSelected(true);
@@ -71,46 +71,35 @@ public class ScreenFXTaskbarCheckBox extends CheckBox {
 			}
 		});
 		// taskbarincludekey
-		ResourceBundle resourceBundle = (ResourceBundle) ScreenFX.getScreenFXProperties().get(
-				"resourceBundle");
-		String taskbarIncludeKey = "";
-		if ((boolean) ScreenFX.getScreenFXProperties().get("allowTooltips")) {
 
-			if (ScreenFX.getScreenFXProperties().get("activateTaskbarKeyCodeCombination") instanceof KeyCodeCombination) {
-				taskbarIncludeKey = "\n"
-						+ java.text.MessageFormat.format(
-								resourceBundle.getString("taskbarincludekey"),
-								new Object[] { ((KeyCodeCombination) ScreenFX.getScreenFXProperties().get(
-										"activateTaskbarKeyCodeCombination")).toString() });
-			}
-			if (ScreenFX.getScreenFXProperties().get("activateTaskbarKeyCodeCombination") instanceof KeyCode) {
-				taskbarIncludeKey = "\n"
-						+ java.text.MessageFormat.format(
-								resourceBundle.getString("taskbarincludekey"),
-								new Object[] { ((KeyCode) ScreenFX.getScreenFXProperties().get(
-										"activateTaskbarKeyCodeCombination")).getName() });
-			}
-			setTooltip(new Tooltip(
-					((ResourceBundle) ScreenFX.getScreenFXProperties().get("resourceBundle"))
-							.getString("taskbar") + taskbarIncludeKey));
+		String activateTaskbarPropertyName = "activateTaskbarKeyCodeCombination";
+
+		String taskbarIncludeKey = "";
+		if (ScreenFXConfig.isAllowTooltips()) {
+			taskbarIncludeKey = "\n"
+					+ java.text.MessageFormat.format(
+							ScreenFXConfig.getResourceBundle().getString("taskbarincludekey"),
+							new Object[] { ScreenFXKeyChecker
+									.getStringRepresentation(activateTaskbarPropertyName) });
+
+			setTooltip(new Tooltip(ScreenFXConfig.getResourceBundle().getString("taskbar")
+					+ taskbarIncludeKey));
 		}
 
 		/*
 		 * init selected value from standard properties
 		 */
-		setSelected(((List<Boolean>) ScreenFX.getScreenFXProperties().get("taskbarIncludeSelected"))
-				.get(screenNr));
+		setSelected(ScreenFXConfig.getTaskbarIncludeSelectedProperties().get(screenNr));
 		selectedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldValue, Boolean newValue) {
-				((List<Boolean>) ScreenFX.getScreenFXProperties().get("taskbarIncludeSelected")).set(
-						screenNr, newValue);
+				ScreenFXConfig.getTaskbarIncludeSelectedProperties().set(screenNr, newValue);
 			}
 		});
 		indeterminateProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldValue, Boolean newValue) {
-				ScreenFXProperties.getTaskbarIncludeIndeterminateProperties().set(screenNr, newValue);
+				ScreenFXConfig.taskbarIncludeIndeterminateProperties.set(screenNr, newValue);
 			}
 		});
 		/*
@@ -118,45 +107,25 @@ public class ScreenFXTaskbarCheckBox extends CheckBox {
 		 * hold down. quick resize gets disabled if the user realeses the key
 		 */
 
-		if (ScreenFX.getScreenFXProperties().get("activateTaskbarKeyCodeCombination") != null) {
-			ScreenFX.getStage().addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+		if (ScreenFXConfig.getInstance().get(activateTaskbarPropertyName) != null) {
+			stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 				@Override
 				public void handle(KeyEvent event) {
 					if (ScreenFX.getScreenFXPopup().isShowing()) {
-						if (ScreenFX.getScreenFXProperties().get("activateTaskbarKeyCodeCombination") instanceof KeyCodeCombination) {
-							if (((KeyCodeCombination) ScreenFX.getScreenFXProperties().get(
-									"activateTaskbarKeyCodeCombination")).match(event)) {
-								event.consume();
-								setIndeterminate(true);
-							}
-						}
-						if (ScreenFX.getScreenFXProperties().get("activateTaskbarKeyCodeCombination") instanceof KeyCode) {
-							if (((KeyCode) ScreenFX.getScreenFXProperties().get(
-									"activateTaskbarKeyCodeCombination")) == event.getCode()) {
-								event.consume();
-								setIndeterminate(true);
-							}
+						if (ScreenFXKeyChecker.checkKeyEvent(activateTaskbarPropertyName, event)) {
+							event.consume();
+							setIndeterminate(true);
 						}
 					}
 				}
 			});
-			ScreenFX.getStage().addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+			stage.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
 				@Override
 				public void handle(KeyEvent event) {
 					if (ScreenFX.getScreenFXPopup().isShowing()) {
-						if (ScreenFX.getScreenFXProperties().get("activateTaskbarKeyCodeCombination") instanceof KeyCodeCombination) {
-							if (((KeyCodeCombination) ScreenFX.getScreenFXProperties().get(
-									"activateTaskbarKeyCodeCombination")).match(event)) {
-								event.consume();
-								setIndeterminate(false);
-							}
-						}
-						if (ScreenFX.getScreenFXProperties().get("activateTaskbarKeyCodeCombination") instanceof KeyCode) {
-							if (((KeyCode) ScreenFX.getScreenFXProperties().get(
-									"activateTaskbarKeyCodeCombination")) == event.getCode()) {
-								event.consume();
-								setIndeterminate(false);
-							}
+						if (ScreenFXKeyChecker.checkKeyEvent(activateTaskbarPropertyName, event)) {
+							event.consume();
+							setIndeterminate(false);
 						}
 					}
 				}

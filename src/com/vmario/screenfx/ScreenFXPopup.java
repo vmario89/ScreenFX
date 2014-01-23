@@ -26,7 +26,6 @@ import java.awt.MouseInfo;
 import java.awt.PointerInfo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.WorkerStateEvent;
@@ -51,6 +50,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 /**
@@ -58,17 +58,15 @@ import javafx.stage.WindowEvent;
  * 
  */
 public class ScreenFXPopup extends Popup {
-	private Service<Void> delayService;
+	private final Service<Void> delayService;
 
 	/**
 	 * make a popup with a oneclick lifecycle to create always new popup
+	 * 
+	 * @throws Exception push exceptions
 	 */
-	public ScreenFXPopup() {
-
-		if ((Long) ScreenFX.getScreenFXProperties().get("exitDelayTime") != null) {
-			delayService = new ScreenFXDelayService((Long) ScreenFX.getScreenFXProperties().get(
-					"exitDelayTime"));
-		}
+	public ScreenFXPopup(Stage stage) throws Exception {
+		delayService = new ScreenFXDelayService(ScreenFXConfig.getExitDelayTime());
 
 		// Popup is special window (no decorations, transparent null
 		// fill). For
@@ -192,20 +190,15 @@ public class ScreenFXPopup extends Popup {
 			buttonGridPane.setMaxHeight(4 * (buttonGap + buttonSize));
 
 			// taskbar checkbox
-			ScreenFXTaskbarCheckBox taskBarCheckBox = new ScreenFXTaskbarCheckBox(screenNr, buttonSize);
+			ScreenFXTaskbarCheckBox taskBarCheckBox = new ScreenFXTaskbarCheckBox(stage, screenNr, buttonSize);
 
 			// overgive positioner with event related data
-			ScreenFXPositioner positioner = new ScreenFXPositioner(graphicsDevices, screenNr);
+			ScreenFXPositioner positioner = new ScreenFXPositioner(stage, graphicsDevices, screenNr);
 			new ScreenFXGridAllocator(positioner, buttonGridPane, buttonSize);
 
-			Label screenLabel = new Label("#" + (screenNr + 1)); // the screen
-															// number
-															// of the
-															// iterating
-															// list -
-															// number #1
-															// is main
-															// screen
+			// the screen number of the iterating list - number #1 is main
+			// screen
+			Label screenLabel = new Label("#" + (screenNr + 1));
 			ImageView screenIcon = new ImageView(this.getClass()
 					.getResource(ScreenFX.getResourcePath() + "screen.png").toExternalForm());
 			screenLabel.setGraphic(screenIcon);
@@ -215,16 +208,12 @@ public class ScreenFXPopup extends Popup {
 
 			// a tooltip which shows some display information for each
 			// device
-			Tooltip screenInfoTooltip = new Tooltip(((ResourceBundle) ScreenFX.getScreenFXProperties().get(
-					"resourceBundle")).getString("screeninformation")
-					+ ":\n"
-					+ graphicsDevices[screenNr].getDisplayMode().getWidth()
-					+ "x"
-					+ graphicsDevices[screenNr].getDisplayMode().getHeight()
-					+ "px @"
-					+ graphicsDevices[screenNr].getDisplayMode().getRefreshRate()
-					+ "Hz - "
-					+ graphicsDevices[screenNr].getDisplayMode().getBitDepth() + "bit");
+			Tooltip screenInfoTooltip = new Tooltip(
+					ScreenFXConfig.getResourceBundle().getString("screeninformation") + ":\n"
+							+ graphicsDevices[screenNr].getDisplayMode().getWidth() + "x"
+							+ graphicsDevices[screenNr].getDisplayMode().getHeight() + "px @"
+							+ graphicsDevices[screenNr].getDisplayMode().getRefreshRate() + "Hz - "
+							+ graphicsDevices[screenNr].getDisplayMode().getBitDepth() + "bit");
 
 			screenLabel.setTooltip(screenInfoTooltip);
 			HBox screenLabelCenteringHBox = new HBox(2);

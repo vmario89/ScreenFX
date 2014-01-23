@@ -1,6 +1,6 @@
 /*
  * ScreenFX - A plugin library for JavaFX 8 adding features for resizing 
- * and arranging stage windows on a multiple screen hardware configuration
+ * and arranging sfxPositioner.getStage() windows on a multiple screen hardware configuration
  * 
  * Copyright (C) 2014 Mario Voigt, Ulmenstr. 35, 09112 Chemnitz, Germany, vmario@hrz.tu-chemnitz.de
  * 
@@ -21,14 +21,11 @@ package com.vmario.screenfx;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -44,11 +41,16 @@ class ScreenFXGridAllocator {
 	private static boolean overwriteMouseSingleClickToDoubleClick;
 
 	/**
-	 * @param sfxPositioner the positioner
-	 * @param buttonGridPane the button grid pane
-	 * @param buttonSize the button size for width and height in pixel
+	 * @param sfxPositioner
+	 *            the positioner
+	 * @param buttonGridPane
+	 *            the button grid pane
+	 * @param buttonSize
+	 *            the button size for width and height in pixel
+	 * @throws Exception push exceptions
 	 */
-	public ScreenFXGridAllocator(ScreenFXPositioner sfxPositioner, GridPane buttonGridPane, int buttonSize) {
+	public ScreenFXGridAllocator(ScreenFXPositioner sfxPositioner, GridPane buttonGridPane, int buttonSize)
+			throws Exception {
 		this.positioner = sfxPositioner;
 
 		/*
@@ -79,31 +81,23 @@ class ScreenFXGridAllocator {
 		List<ScreenFXGridElement> sfxGridElementList = new ArrayList<>();
 
 		/*
-		 * build tooltip - note that this will be only displayed if the property
+		 * build tooltip - note that this will be only displayed if the setting
 		 * "allowTooltips" is true in class ScreenFXGridElement
 		 */
-		ResourceBundle resourceBundle = (ResourceBundle) ScreenFX.getScreenFXProperties().get(
-				"resourceBundle");
 
-		String commonButtonTooltip = resourceBundle.getString("placing") + "\n"
-				+ resourceBundle.getString("resizing");
+		String quickResizeKeyPropertyName = "quickResizeKeyCodeCombination";
+
+		String commonButtonTooltip = ScreenFXConfig.getResourceBundle().getString("placing") + "\n"
+				+ ScreenFXConfig.getResourceBundle().getString("resizing");
 
 		String quickResizeKey = "";
-		if (ScreenFX.getScreenFXProperties().get("quickResizeKeyCodeCombination") != null) {
-			if (ScreenFX.getScreenFXProperties().get("quickResizeKeyCodeCombination") instanceof KeyCodeCombination) {
-				quickResizeKey = java.text.MessageFormat.format(
-						resourceBundle.getString("screenfxquickresizekey"),
-						new Object[] { ((KeyCodeCombination) ScreenFX.getScreenFXProperties().get(
-								"quickResizeKeyCodeCombination")).toString() })
-						+ "\n";
-			}
-			if (ScreenFX.getScreenFXProperties().get("quickResizeKeyCodeCombination") instanceof KeyCode) {
-				quickResizeKey = java.text.MessageFormat.format(
-						resourceBundle.getString("screenfxquickresizekey"),
-						new Object[] { ((KeyCode) ScreenFX.getScreenFXProperties().get(
-								"quickResizeKeyCodeCombination")).getName() })
-						+ "\n";
-			}
+		if (ScreenFXConfig.getInstance().get(quickResizeKeyPropertyName) != null) {
+
+			quickResizeKey = java.text.MessageFormat.format(
+					ScreenFXConfig.getResourceBundle().getString("screenfxquickresizekey"),
+					new Object[] { ScreenFXKeyChecker.getStringRepresentation(quickResizeKeyPropertyName) })
+					+ "\n";
+
 			commonButtonTooltip += "\n" + quickResizeKey;
 		}
 		/*
@@ -119,16 +113,15 @@ class ScreenFXGridAllocator {
 		sfxGridElementList.add(new ScreenFXGridElement(2, 0, "6", buttonSize, buttonImages.get(6), commonButtonTooltip, ScreenFXPosition.LEFT_BOTTOM));
 		sfxGridElementList.add(new ScreenFXGridElement(2, 1, "7", buttonSize, buttonImages.get(7), commonButtonTooltip, ScreenFXPosition.MIDDLE_BOTTOM));
 		sfxGridElementList.add(new ScreenFXGridElement(2, 2, "8", buttonSize, buttonImages.get(8), commonButtonTooltip, ScreenFXPosition.RIGHT_BOTTOM));
-		sfxGridElementList.add(new ScreenFXGridElement(3, 0, "9", buttonSize, buttonImages.get(9),  resourceBundle.getString("resize-height"), ScreenFXPosition.RESIZE_HEIGHT));
-		sfxGridElementList.add(new ScreenFXGridElement(3, 1, "fullScreenButton", buttonSize, buttonImages.get(10), resourceBundle.getString("fullscreen"), ScreenFXPosition.FULLSCREEN));
-		sfxGridElementList.add(new ScreenFXGridElement(3, 2, "11", buttonSize, buttonImages.get(11), resourceBundle.getString("resize-width"), ScreenFXPosition.RESIZE_WIDTH));
+		sfxGridElementList.add(new ScreenFXGridElement(3, 0, "9", buttonSize, buttonImages.get(9),  ScreenFXConfig.getResourceBundle().getString("resize-height"), ScreenFXPosition.RESIZE_HEIGHT));
+		sfxGridElementList.add(new ScreenFXGridElement(3, 1, "fullScreenButton", buttonSize, buttonImages.get(10), ScreenFXConfig.getResourceBundle().getString("fullscreen"), ScreenFXPosition.FULLSCREEN));
+		sfxGridElementList.add(new ScreenFXGridElement(3, 2, "11", buttonSize, buttonImages.get(11), ScreenFXConfig.getResourceBundle().getString("resize-width"), ScreenFXPosition.RESIZE_WIDTH));
 		//@formatter:on
 
 		// Override the icon set if property is given
-		if (ScreenFX.getScreenFXProperties().get("iconSet") != null) {
+		if (ScreenFXConfig.getInstance().get("iconSet") != null) {
 			try {
-				@SuppressWarnings("unchecked")
-				ArrayList<ImageView> iconSet = (ArrayList<ImageView>) ScreenFX.getScreenFXProperties().get(
+				ArrayList<ImageView> iconSet = (ArrayList<ImageView>) ScreenFXConfig.getInstance().get(
 						"iconSet");
 				for (int i = 0; i < iconSet.size(); i++) {
 					sfxGridElementList.get(i).setGraphic(iconSet.get(i));
@@ -140,19 +133,15 @@ class ScreenFXGridAllocator {
 		}
 
 		/*
-		 * disable some buttons if window is not resizable - a window is also
-		 * resizable when it is set to isResizable(false) but it would violate
-		 * the common ui behavior
+		 * disable some buttons if window is not resizable
 		 */
-		if (!(boolean) ScreenFX.getScreenFXProperties().get("UIConventionOverride")) {
-			if (!ScreenFX.getStage().isResizable()) {
-				sfxGridElementList.get(9).setDisable(true); // disable
-															// RESIZE_HEIGHT
-				sfxGridElementList.get(10).setDisable(true); // disable
-																// FULLSCREEN
-				sfxGridElementList.get(11).setDisable(true); // disable
-																// RESIZE_WIDTH
-			}
+		if (!sfxPositioner.getStage().isResizable()) {
+			sfxGridElementList.get(9).setDisable(true); // disable
+														// RESIZE_HEIGHT
+			sfxGridElementList.get(10).setDisable(true); // disable
+															// FULLSCREEN
+			sfxGridElementList.get(11).setDisable(true); // disable
+															// RESIZE_WIDTH
 		}
 
 		/*
@@ -160,45 +149,25 @@ class ScreenFXGridAllocator {
 		 * hold down. quick resize gets disabled if the user realeses the key
 		 */
 
-		if (ScreenFX.getScreenFXProperties().get("quickResizeKeyCodeCombination") != null) {
-			ScreenFX.getStage().addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+		if (ScreenFXConfig.getInstance().get(quickResizeKeyPropertyName) != null) {
+			sfxPositioner.getStage().addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 				@Override
 				public void handle(KeyEvent event) {
 					if (ScreenFX.getScreenFXPopup().isShowing()) {
-						if (ScreenFX.getScreenFXProperties().get("quickResizeKeyCodeCombination") instanceof KeyCodeCombination) {
-							if (((KeyCodeCombination) ScreenFX.getScreenFXProperties().get(
-									"quickResizeKeyCodeCombination")).match(event)) {
-								event.consume();
-								overwriteMouseSingleClickToDoubleClick = true;
-							}
-						}
-						if (ScreenFX.getScreenFXProperties().get("quickResizeKeyCodeCombination") instanceof KeyCode) {
-							if (((KeyCode) ScreenFX.getScreenFXProperties().get(
-									"quickResizeKeyCodeCombination")) == event.getCode()) {
-								event.consume();
-								overwriteMouseSingleClickToDoubleClick = true;
-							}
+						if (ScreenFXKeyChecker.checkKeyEvent(quickResizeKeyPropertyName, event)) {
+							event.consume();
+							overwriteMouseSingleClickToDoubleClick = true;
 						}
 					}
 				}
 			});
-			ScreenFX.getStage().addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+			sfxPositioner.getStage().addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
 				@Override
 				public void handle(KeyEvent event) {
 					if (ScreenFX.getScreenFXPopup().isShowing()) {
-						if (ScreenFX.getScreenFXProperties().get("quickResizeKeyCodeCombination") instanceof KeyCodeCombination) {
-							if (((KeyCodeCombination) ScreenFX.getScreenFXProperties().get(
-									"quickResizeKeyCodeCombination")).match(event)) {
-								event.consume();
-								overwriteMouseSingleClickToDoubleClick = false;
-							}
-						}
-						if (ScreenFX.getScreenFXProperties().get("quickResizeKeyCodeCombination") instanceof KeyCode) {
-							if (((KeyCode) ScreenFX.getScreenFXProperties().get(
-									"quickResizeKeyCodeCombination")) == event.getCode()) {
-								event.consume();
-								overwriteMouseSingleClickToDoubleClick = false;
-							}
+						if (ScreenFXKeyChecker.checkKeyEvent(quickResizeKeyPropertyName, event)) {
+							event.consume();
+							overwriteMouseSingleClickToDoubleClick = false;
 						}
 					}
 				}
@@ -207,7 +176,7 @@ class ScreenFXGridAllocator {
 
 		/*
 		 * this event handler will set the actions for each button. if the
-		 * button is index 10 then the stage has to be set to fullscreen or to
+		 * button is index 10 then the sfxPositioner.getStage() has to be set to fullscreen or to
 		 * be quit from - this action event cannot be processed by
 		 * ScreenFXPositioner
 		 */
@@ -218,20 +187,20 @@ class ScreenFXGridAllocator {
 				@Override
 				public void handle(MouseEvent event) {
 					try {
-						// if stage is in fullscreen and a resize button is
+						// if sfxPositioner.getStage() is in fullscreen and a resize button is
 						// pressed disable the fullscreen properly. do not do
 						// this action for the fullscreen button itself
-						if (ScreenFX.getStage().isFullScreen()) {
+						if (sfxPositioner.getStage().isFullScreen()) {
 							if (screenFXGridElement.getId() != null
 									&& !screenFXGridElement.getId().equals("fullScreenButton")) {
-								ScreenFX.getStage().setFullScreen(false);
+								sfxPositioner.getStage().setFullScreen(false);
 							}
 						}
 
 						if (event.getClickCount() == 2) {
 							if (screenFXGridElement.getId() != null
 									&& screenFXGridElement.getId().equals("fullScreenButton")) {
-								ScreenFX.getStage().setFullScreen(false);
+								sfxPositioner.getStage().setFullScreen(false);
 							}
 							if (overwriteMouseSingleClickToDoubleClick) {
 								sfxPositioner.setPosition(screenFXGridElement.getSfxPosition(), true);
@@ -241,7 +210,7 @@ class ScreenFXGridAllocator {
 						} else {
 							if (screenFXGridElement.getId() != null
 									&& screenFXGridElement.getId().equals("fullScreenButton")) {
-								ScreenFX.getStage().setFullScreen(true);
+								sfxPositioner.getStage().setFullScreen(true);
 							}
 							if (overwriteMouseSingleClickToDoubleClick) {
 								sfxPositioner.setPosition(screenFXGridElement.getSfxPosition(), true);

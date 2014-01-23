@@ -20,9 +20,6 @@
 package examples;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -57,39 +54,11 @@ public class ScreenFXDemo implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// make a new ScreenFX object
 		ScreenFX screenFX = new ScreenFX();
-
-		// put some static properties to override the standard one's
-		Properties sfxProperties = ScreenFX.getScreenFXProperties();
-		sfxProperties.put("UIConventionOverride", new Boolean(false));
-		sfxProperties.put("allowTooltips", new Boolean(true));
-		sfxProperties.put("exitDelayTime", new Long(200l));
-		List<Boolean> taskbarStandards = new ArrayList<Boolean>();
-		taskbarStandards.add(new Boolean(false));
-		taskbarStandards.add(new Boolean(true));
-		sfxProperties.put("taskbarIncludeSelected", taskbarStandards);
-		// sfxProperties.put("popupKeyCodeCombination", new
-		// KeyCodeCombination(KeyCode.D,
-		// KeyCombination.SHIFT_DOWN)); //example of a key combination
-		// sfxProperties.remove("popupKeyCodeCombination");
-		// sfxProperties.put("popupKeyCodeCombination", KeyCode.D); // example
-		// for
-		// // single
-		// // key
-		// sfxProperties.put("quickResizeKeyCodeCombination", KeyCode.B); //
-		// example
-		// for
-		// single
-		// key
-		screenFX.setScreenFXProperties(sfxProperties);
-
-		// install ScreenFX to some nodes
 		screenFX.install(buttonShowScreenFX);
-		screenFX.install(toggleButtonScreenFX);
 	}
 
 	@FXML
 	private void handleScreenFX() {
-		System.out.println("you pressed a button");
 	}
 
 }
