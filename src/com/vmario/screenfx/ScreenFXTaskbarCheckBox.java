@@ -34,7 +34,7 @@ import javafx.stage.Stage;
  * @author vmario
  * 
  */
-public class ScreenFXTaskbarCheckBox extends CheckBox {
+class ScreenFXTaskbarCheckBox extends CheckBox {
 	/**
 	 * @param stage
 	 *            the stage to apply on

@@ -57,7 +57,7 @@ class ScreenFXPositioner {
 	 * @param doubleClick
 	 *            boolean value if the user performed a single click (false) or
 	 *            double click (true)
-	 * @throws Exception
+	 * @throws Exception push exceptions
 	 */
 	public void setPosition(ScreenFXPosition sfxPosition, boolean doubleClick) throws Exception {
 

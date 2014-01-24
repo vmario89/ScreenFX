@@ -29,7 +29,7 @@ import javafx.scene.input.KeyEvent;
  * @author vmario
  * 
  */
-public class ScreenFXKeyChecker {
+class ScreenFXKeyChecker {
 
 	static String getStringRepresentation(String keyCodePropertyName) {
 

@@ -57,13 +57,17 @@ import javafx.stage.WindowEvent;
  * @author vmario
  * 
  */
-public class ScreenFXPopup extends Popup {
+class ScreenFXPopup extends Popup {
 	private final Service<Void> delayService;
 
 	/**
 	 * make a popup with a oneclick lifecycle to create always new popup
 	 * 
-	 * @throws Exception push exceptions
+	 * @param stage
+	 *            the stage to show on the popup
+	 * 
+	 * @throws Exception
+	 *             push exceptions
 	 */
 	public ScreenFXPopup(Stage stage) throws Exception {
 		delayService = new ScreenFXDelayService(ScreenFXConfig.getExitDelayTime());
@@ -208,12 +212,16 @@ public class ScreenFXPopup extends Popup {
 
 			// a tooltip which shows some display information for each
 			// device
-			Tooltip screenInfoTooltip = new Tooltip(
-					ScreenFXConfig.getResourceBundle().getString("screeninformation") + ":\n"
-							+ graphicsDevices[screenNr].getDisplayMode().getWidth() + "x"
-							+ graphicsDevices[screenNr].getDisplayMode().getHeight() + "px @"
-							+ graphicsDevices[screenNr].getDisplayMode().getRefreshRate() + "Hz - "
-							+ graphicsDevices[screenNr].getDisplayMode().getBitDepth() + "bit");
+			Tooltip screenInfoTooltip = new Tooltip(ScreenFXConfig.getResourceBundle().getString(
+					"screeninformation")
+					+ ":\n"
+					+ graphicsDevices[screenNr].getDisplayMode().getWidth()
+					+ "x"
+					+ graphicsDevices[screenNr].getDisplayMode().getHeight()
+					+ "px @"
+					+ graphicsDevices[screenNr].getDisplayMode().getRefreshRate()
+					+ "Hz - "
+					+ graphicsDevices[screenNr].getDisplayMode().getBitDepth() + "bit");
 
 			screenLabel.setTooltip(screenInfoTooltip);
 			HBox screenLabelCenteringHBox = new HBox(2);
