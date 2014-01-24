@@ -39,9 +39,7 @@
 <h2>
 <a name="what-is-screenfx" class="anchor" href="#what-is-screenfx"><span class="octicon octicon-link"></span></a>What is ScreenFX?</h2>
 
-<p>ScreenFX is a library for JavaFX 8 which allows you to install a small and lightweight popup container to your application stages. This popup has abilities to handle positioning and resizing events of each stage. Please read further to </p>
-
-<p>learn how to use.</p>
+<p>ScreenFX is a library for JavaFX 8 which allows you to install a small and lightweight popup container to your application stages. This popup has abilities to handle positioning and resizing events of each stage. Please read further to learn how to use.</p>
 
 <p><img src="http://image-upload.de/image/GGJRtP/b8a617e1ee.jpg" alt="quartered stages example"></p>
 
@@ -52,9 +50,7 @@
 <h2>
 <a name="editors-note" class="anchor" href="#editors-note"><span class="octicon octicon-link"></span></a>Editor's note</h2>
 
-<p>This tool is inspired originally by the tool "Asus Multiframe" which was only capable to handle two screens. As the tool multiframe does not work an java applications and because of the screen number limitation i decided to write my own </p>
-
-<p>tool box.</p>
+<p>This tool is inspired originally by the tool "Asus Multiframe" which was only capable to handle two screens. As the tool multiframe does not work an java applications and because of the screen number limitation i decided to write my own tool box.</p>
 
 <h2>
 <a name="planned-releases" class="anchor" href="#planned-releases"><span class="octicon octicon-link"></span></a>Planned releases</h2>
@@ -73,16 +69,14 @@
 
 <p><img src="http://image-upload.de/image/CyzLs8/8a2f142ed9.png" alt="The system layout"><img src="http://image-upload.de/image/3Bq9nR/384acc8dba.png" alt="The grid layout read from system configuration"></p>
 
-<p>As you can see the layout reacts on the total count of screens. If only one screen is available, ScreenFX will only show one (the default colored main screen #1). If more screens are installed all secondary screens get a darker color </p>
-
-<p>than screen #1.</p>
+<p>As you can see the layout reacts on the total count of screens. If only one screen is available, ScreenFX will only show one (the default colored main screen #1). If more screens are installed all secondary screens get a darker color than screen #1.</p>
 
 <p><img src="http://image-upload.de/image/NwIPzY/f170eaedaf.png" alt="1 screen"><img src="http://image-upload.de/image/NEe4sB/6eae86a6d4.png" alt="2 screens"></p>
 
 <h2>
 <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use?</h2>
 
-<p>The installation of ScreenFX is very easy. You do not need to initialize the tool manually. You only have to install the tool once per stage. Therefore the only requirement is that the stage contains a total minimum of one node. Tie the </p>
+<p>The installation of ScreenFX is very easy. You do not need to initialize the tool manually. You only have to install the tool once per stage.</p>
 
 <p>screenfx-current.jar into your JavaFX project and call the function like this:</p>
 
@@ -95,37 +89,37 @@ screenFX.installOn(stage);
 <p>If you want more access to ScreenFX you can adjust the following properties (as listed in the features list):</p>
 
 <pre>
-Button button = new Button("Show ScreenFX");
-Properties sfxProperties = ScreenFX.getScreenFXProperties();
-put("iconSet", new ArrayList());
-put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
-put("quickResizeKeyCodeCombination", KeyCode.CONTROL);
-put("activateTaskbarKeyCodeCombination", KeyCode.SHIFT);
-setResourceBundle(your custom resource bundle);
-setResourcePath();
-setAllowTooltips();
-setExitDelayTime();
-screenFX.installOn();
+Stage stage = new Stage();
+ScreenFXProperties.put("iconSet", new ArrayList());
+ScreenFXProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+ScreenFXProperties.put("quickResizeKeyCodeCombination", KeyCode.CONTROL);
+ScreenFXProperties.put("activateTaskbarKeyCodeCombination", KeyCode.SHIFT);
+ScreenFXProperties.setResourceBundle(your custom resource bundle);
+ScreenFXProperties.setResourcePath();
+ScreenFXProperties.setAllowTooltips();
+ScreenFXProperties.setExitDelayTime();
+screenFX.installOn(stage);
 </pre>
 
 <p>If you want to remove the key combinations do some property remove() call like the following example shows</p>
 
 <pre>
-sfxProperties.remove("popupKeyCodeCombination");
+ScreenFXProperties.remove("popupKeyCodeCombination");
+ScreenFXProperties.remove("quickResizeKeyCodeCombination");
+ScreenFXProperties.remove("activateTaskbarKeyCodeCombination");
 </pre>
 
-<p>Possible ways to set single key accelerators or key combinations (as example for the ScreenFX main popup):</p>
+<p>There are four possible ways to set single key accelerators or key combinations of ScreenFX:</p>
 
 <pre>
-put("popupKeyCodeCombination", KeyCode.SHIFT);
-put("popupKeyCodeCombination", KeyCode.S);
-put("popupKeyCodeCombination", KeyCombination.keyCombination("Ctrl+Alt+X"));
-put("popupKeyCodeCombination", KeyCharacterCombination.keyCombination("Ctrl+S"));
+ScreenFXProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+ScreenFXProperties.put("popupKeyCodeCombination", KeyCode.S);
+ScreenFXProperties.put("popupKeyCodeCombination", KeyCode.SHIFT); //you can also use modifiers!
+ScreenFXProperties.put("popupKeyCodeCombination", KeyCombination.keyCombination("Ctrl+Alt+X"));
+ScreenFXProperties.put("popupKeyCodeCombination", KeyCharacterCombination.keyCombination("Ctrl+S"));
 </pre>
 
-<p>ScreenFX can be used with normal builder-like source code as well as using with FXML and a controller class. You can directly install ScreenFX into the initialize() method of your controller. See the example distributed with the </p>
-
-<p>library.</p>
+<p>ScreenFX can be used with normal builder-like source code as well as using with FXML and a controller class. See the example distributed with the library.</p>
 
 <h2>
 <a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
@@ -135,6 +129,7 @@ put("popupKeyCodeCombination", KeyCharacterCombination.keyCombination("Ctrl+S"))
 
 <ul>
 <li>compatible up to 9 screens (cubic layout, master screen in middle of cube)</li>
+<li>control one stage from another (install controller button for stage nr. 1 on a stage nr. 2)</li>
 <li>standard language support german + english</li>
 <li>should be compatible with all operating systems (tested only Windows 7/8/8.1)</li>
 </ul><h3>
@@ -150,21 +145,20 @@ put("popupKeyCodeCombination", KeyCharacterCombination.keyCombination("Ctrl+S"))
 <li>global configuration options which are:
 
 <ul>
-<li>change key combination</li>
+<li>change key combinations</li>
 <li>enable/disable tooltips</li>
-<li>enable/disable overriding of ui conventions (if enabled you can resize the window even it is in fullscreen mode)</li>
 <li>add custom icon set</li>
-<li>add custom language resource</li>
-<li>change the delay time to exit ScreenFX when moving mouse out</li>
+<li>add custom language resource files</li>
+<li>change the delay time to exit ScreenFX when moving mouse out of popup</li>
 </ul>
 </li>
-<li>configuration is global so you can access one static class to controll all the ScreenFX containers</li>
+<li>configuration is global so you controll all the ScreenFX containers with only one singleton class</li>
 <li>for each stage you can allow an own ScreenFX container separately</li>
 <li>resize window to screen halfs or quarters</li>
 <li>put window to screen edges or corners</li>
 <li>set to fullscreen (fully fullscreen or fullscreen showing taskbar)</li>
 <li>maximize window in width, height or both</li>
-<li>jump the window to each screen you want</li>
+<li>jump the window to each screen you want (even in fullscreen)</li>
 <li>access ScreenFX through key combination (default: ctrl + s) or via button pressing (you need a JavaFX component which extends the class ButtonBase)</li>
 </ul><h2>
 <a name="to-do" class="anchor" href="#to-do"><span class="octicon octicon-link"></span></a>To do</h2>
@@ -195,10 +189,6 @@ put("popupKeyCodeCombination", KeyCharacterCombination.keyCombination("Ctrl+S"))
 <li>put some try-catch methods into code to grant more stability</li>
 </ul><h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
-
-<p>I would appreciate if somebody contributes to my source code. Help me making it even more functional, more stable, add some style sheets, create additional language support, fix spelling errors and  bugs in source code, etc. - Thanks, </p>
-
-<p>Mario Voigt - 19.01.2014</p>
 
 <pre>
 /*
