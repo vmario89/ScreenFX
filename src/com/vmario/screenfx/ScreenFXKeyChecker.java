@@ -19,6 +19,7 @@
  */
 package com.vmario.screenfx;
 
+import javafx.scene.input.KeyCharacterCombination;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -30,7 +31,7 @@ import javafx.scene.input.KeyEvent;
  */
 public class ScreenFXKeyChecker {
 
-	static String getStringRepresentation(String keyCodePropertyName) throws Exception {
+	static String getStringRepresentation(String keyCodePropertyName) {
 
 		if (ScreenFXConfig.getInstance().get(keyCodePropertyName) instanceof KeyCodeCombination) {
 			return ((KeyCodeCombination) ScreenFXConfig.getInstance().get(keyCodePropertyName)).getName();
@@ -39,7 +40,10 @@ public class ScreenFXKeyChecker {
 		if (ScreenFXConfig.getInstance().get(keyCodePropertyName) instanceof KeyCombination) {
 			return ((KeyCombination) ScreenFXConfig.getInstance().get(keyCodePropertyName)).getName();
 		}
-
+		if (ScreenFXConfig.getInstance().get(keyCodePropertyName) instanceof KeyCharacterCombination) {
+			return ((KeyCharacterCombination) ScreenFXConfig.getInstance().get(keyCodePropertyName))
+					.getName();
+		}
 		if (ScreenFXConfig.getInstance().get(keyCodePropertyName) instanceof KeyCode) {
 			return ((KeyCode) ScreenFXConfig.getInstance().get(keyCodePropertyName)).getName();
 		}
@@ -49,8 +53,10 @@ public class ScreenFXKeyChecker {
 	}
 
 	/**
-	 * @param keyCodePropertyName the keycode name from properties
-	 * @param event the key event to check
+	 * @param keyCodePropertyName
+	 *            the keycode name from properties
+	 * @param event
+	 *            the key event to check
 	 * @return true or false
 	 */
 	public static boolean checkKeyEvent(String keyCodePropertyName, KeyEvent event) {
@@ -64,6 +70,14 @@ public class ScreenFXKeyChecker {
 				return true;
 			}
 		}
+
+		if (ScreenFXConfig.getInstance().get(keyCodePropertyName) instanceof KeyCharacterCombination) {
+			if (((KeyCharacterCombination) ScreenFXConfig.getInstance().get(keyCodePropertyName))
+					.match(event)) {
+				return true;
+			}
+		}
+
 		if (ScreenFXConfig.getInstance().get(keyCodePropertyName) instanceof KeyCode) {
 			if (((KeyCode) ScreenFXConfig.getInstance().get(keyCodePropertyName)) == event.getCode()) {
 				return true;

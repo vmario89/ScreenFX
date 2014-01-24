@@ -200,7 +200,7 @@ public class ScreenFXPopup extends Popup {
 			// screen
 			Label screenLabel = new Label("#" + (screenNr + 1));
 			ImageView screenIcon = new ImageView(this.getClass()
-					.getResource(ScreenFX.getResourcePath() + "screen.png").toExternalForm());
+					.getResource(ScreenFXConfig.getResourcePath() + "screen.png").toExternalForm());
 			screenLabel.setGraphic(screenIcon);
 			screenLabel.setMaxWidth(Double.MAX_VALUE);
 			screenLabel.setTextAlignment(TextAlignment.CENTER);

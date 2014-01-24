@@ -46,7 +46,7 @@ public class ScreenFXConfig extends Properties {
 	/*
 	 * for public access through getters/setters
 	 */
-	private static String resourcePath = "";
+	private static String resourcePath = "/com/vmario/screenfx/resource/";
 	private static List<Boolean> taskbarIncludeSelectedProperties = new ArrayList<Boolean>(9);
 	private static boolean allowTooltips = true;
 	private static long exitDelayTime = 350l;
@@ -76,6 +76,7 @@ public class ScreenFXConfig extends Properties {
 		put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		put("quickResizeKeyCodeCombination", KeyCode.CONTROL);
 		put("activateTaskbarKeyCodeCombination", KeyCode.SHIFT);
+
 	}
 
 	static String getResourcePath() {

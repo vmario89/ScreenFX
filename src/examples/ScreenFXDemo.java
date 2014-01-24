@@ -28,8 +28,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 
-import com.vmario.screenfx.ScreenFX;
-
 /**
  * @author vmario
  * 
@@ -52,13 +50,19 @@ public class ScreenFXDemo implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// make a new ScreenFX object
-		ScreenFX screenFX = new ScreenFX();
-		screenFX.install(buttonShowScreenFX);
+
 	}
 
 	@FXML
 	private void handleScreenFX() {
+	}
+
+	ToggleButton getToggleButtonScreenFX() {
+		return toggleButtonScreenFX;
+	}
+
+	Button getButtonShowScreenFX() {
+		return buttonShowScreenFX;
 	}
 
 }

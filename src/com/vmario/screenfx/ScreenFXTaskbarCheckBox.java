@@ -48,7 +48,7 @@ public class ScreenFXTaskbarCheckBox extends CheckBox {
 	 */
 	ScreenFXTaskbarCheckBox(Stage stage, int screenNr, int buttonSize) throws Exception {
 		ImageView taskBarCheckBoxIcon = new ImageView(this.getClass()
-				.getResource(ScreenFX.getResourcePath() + "taskbar.png").toExternalForm());
+				.getResource(ScreenFXConfig.getResourcePath() + "taskbar.png").toExternalForm());
 		setSelected(true);
 		setGraphic(taskBarCheckBoxIcon);
 		setMinHeight(buttonSize);
@@ -108,6 +108,7 @@ public class ScreenFXTaskbarCheckBox extends CheckBox {
 		 */
 
 		if (ScreenFXConfig.getInstance().get(activateTaskbarPropertyName) != null) {
+			
 			stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 				@Override
 				public void handle(KeyEvent event) {

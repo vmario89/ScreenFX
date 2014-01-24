@@ -59,18 +59,18 @@ class ScreenFXGridAllocator {
 		List<ImageView> buttonImages = new ArrayList<ImageView>(12);
 		try {
 			//@formatter:off
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-left-top.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-middle-top.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-right-top.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-left-middle.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-middle-middle.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-right-middle.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-left-bottom.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-middle-bottom.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-right-bottom.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-height.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-fullscreen.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFX.getResourcePath() + "screen-width.png").toExternalForm()));	
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-left-top.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-middle-top.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-right-top.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-left-middle.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-middle-middle.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-right-middle.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-left-bottom.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-middle-bottom.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-right-bottom.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-height.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-fullscreen.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-width.png").toExternalForm()));	
 			//@formatter:on				
 
 		} catch (Exception e) {
