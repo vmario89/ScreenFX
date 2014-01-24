@@ -5,27 +5,13 @@
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="ScreenFX : A plugin library for JavaFX 8 adding features to resize and arrange stage windows for multiple screens" />
-    <meta name="google-site-verification" content="fJkW-TN8JVBlH0NMn-kRq767TFeAKhpc4PcMLd-XJJI" />
-    <meta name="author" content="Mario Voigt, vmario, vmario89">
-    <meta name="keywords" content="ScreenFX,Screen FX, JavaFX stage resize,javafx manage stages,javafx8,javafx window positioning,multiframe,javafx multiframe,java multiframe">
-    <meta name="date" content="23.01.2014">
+
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>ScreenFX</title>
   </head>
 
   <body>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-47298969-2', 'vmario89.github.io');
-  ga('send', 'pageview');
-
-</script>
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
@@ -45,7 +31,7 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p></p><h1>
+        <h1>
 <a name="welcome-to-screenfx" class="anchor" href="#welcome-to-screenfx"><span class="octicon octicon-link"></span></a>Welcome to ScreenFX!</h1>
 
 <p><img src="http://image-upload.de/image/NEe4sB/6eae86a6d4.png" alt="ScreenFX"></p>
@@ -101,29 +87,40 @@
 <p>screenfx-current.jar into your JavaFX project and call the function like this:</p>
 
 <pre>
-Button button = new Button("Show ScreenFX");
+Stage stage = new Stage();
 ScreenFX screenFX = new ScreenFX();
-screenFX.install(button);
+screenFX.installOn(stage);
 </pre>
 
-<p>If you want more access to ScreenFX you can adjust some properties (as listed in the features list):</p>
+<p>If you want more access to ScreenFX you can adjust the following properties (as listed in the features list):</p>
 
 <pre>
 Button button = new Button("Show ScreenFX");
 Properties sfxProperties = ScreenFX.getScreenFXProperties();
-sfxProperties.put("UIConventionOverride", new Boolean(false));
-sfxProperties.put("allowTooltips", new Boolean(true));
-sfxProperties.put("exitDelayTime", new Long(200l));
-sfxProperties.put("popupKeyCodeCombination", 
-    new KeyCodeCombination(KeyCode.D, KeyCombination.SHIFT_DOWN));
-screenFX.setScreenFXProperties(sfxProperties);
-screenFX.install(button);
+put("iconSet", new ArrayList());
+put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+put("quickResizeKeyCodeCombination", KeyCode.CONTROL);
+put("activateTaskbarKeyCodeCombination", KeyCode.SHIFT);
+setResourceBundle(your custom resource bundle);
+setResourcePath();
+setAllowTooltips();
+setExitDelayTime();
+screenFX.installOn();
 </pre>
 
 <p>If you want to remove the key combinations do some property remove() call like the following example shows</p>
 
 <pre>
 sfxProperties.remove("popupKeyCodeCombination");
+</pre>
+
+<p>Possible ways to set single key accelerators or key combinations (as example for the ScreenFX main popup):</p>
+
+<pre>
+put("popupKeyCodeCombination", KeyCode.SHIFT);
+put("popupKeyCodeCombination", KeyCode.S);
+put("popupKeyCodeCombination", KeyCombination.keyCombination("Ctrl+Alt+X"));
+put("popupKeyCodeCombination", KeyCharacterCombination.keyCombination("Ctrl+S"));
 </pre>
 
 <p>ScreenFX can be used with normal builder-like source code as well as using with FXML and a controller class. You can directly install ScreenFX into the initialize() method of your controller. See the example distributed with the </p>
@@ -238,6 +235,18 @@ sfxProperties.remove("popupKeyCodeCombination");
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-47298969-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
 
   </body>
 </html>
