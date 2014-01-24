@@ -177,6 +177,7 @@ ScreenFXProperties.remove("activateTaskbarKeyCodeCombination");
 <a name="bug-fixingavoiding" class="anchor" href="#bug-fixingavoiding"><span class="octicon octicon-link"></span></a>Bug fixing/avoiding</h3>
 
 <ul>
+<li>fix issue that if you control one stage from another some key combinations do not work because the other stage has focus and does not react on the defined ones</li>
 <li>fix issue that when a screen gets removed from hardware while ScreenFX is shown there are some ugly nonlocatable exceptions thrown. These exceptions are thrown casually by some effects like Glow and ColorAdjust</li>
 <li>add data validator for class ScreenFXProperties so there cannot be thrown a NullPointerException or add != null check for each property getting</li>
 <li>make a fix if activating the popup with ctrl + s and holding ctrl (or a similar key combination where the modifier is the same) there wont be set the resize doubleclick emulation event</li>
