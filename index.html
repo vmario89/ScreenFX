@@ -90,7 +90,14 @@ ScreenFXProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode
 ScreenFXProperties.put("quickResizeKeyCodeCombination", KeyCode.CONTROL);
 ScreenFXProperties.put("activateTaskbarKeyCodeCombination", KeyCode.SHIFT);
 ScreenFXProperties.setResourceBundle(your custom resource bundle);
-ScreenFXProperties.setResourcePath(<p>There are four possible ways to set single key accelerators or key combinations of ScreenFX:</p>
+ScreenFXProperties.setResourcePath(//your custom path to icon and style files);
+ScreenFXProperties.setTaskbarIncludeSelectedProperties(//your initial config for the 9 taskbar include checkboxes);
+ScreenFXProperties.setAllowTooltips(//true/false);
+ScreenFXProperties.setExitDelayTime(//your delay time as a long value);
+screenFX.installOn(//stage);
+</pre>
+
+<p>There are four possible ways to set single key accelerators or key combinations of ScreenFX:</p>
 
 <pre>
 ScreenFXProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
@@ -202,7 +209,7 @@ ScreenFXProperties.remove("activateTaskbarKeyCodeCombination");
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/gpl-3.0.html
  */
-</pre></pre>
+</pre>
       </section>
     </div>
 
