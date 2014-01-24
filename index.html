@@ -53,11 +53,6 @@
 <p>This tool is inspired originally by the tool "Asus Multiframe" which was only capable to handle two screens. As the tool multiframe does not work an java applications and because of the screen number limitation i decided to write my own tool box.</p>
 
 <h2>
-<a name="planned-releases" class="anchor" href="#planned-releases"><span class="octicon octicon-link"></span></a>Planned releases</h2>
-
-<p>Please have a look at the big "to do" list. The next release will be very soon (end of january 2014)</p>
-
-<h2>
 <a name="project-requirements" class="anchor" href="#project-requirements"><span class="octicon octicon-link"></span></a>Project requirements</h2>
 
 <p>This library is written for JavaFX 8 and was built with JDK 1.8.0-b121. If you compile the sources with JDK 1.7 it could mabye work 100% without any trouble.</p>
@@ -95,10 +90,14 @@ ScreenFXProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode
 ScreenFXProperties.put("quickResizeKeyCodeCombination", KeyCode.CONTROL);
 ScreenFXProperties.put("activateTaskbarKeyCodeCombination", KeyCode.SHIFT);
 ScreenFXProperties.setResourceBundle(your custom resource bundle);
-ScreenFXProperties.setResourcePath();
-ScreenFXProperties.setAllowTooltips();
-ScreenFXProperties.setExitDelayTime();
-screenFX.installOn(stage);
+ScreenFXProperties.setResourcePath(<p>There are four possible ways to set single key accelerators or key combinations of ScreenFX:</p>
+
+<pre>
+ScreenFXProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+ScreenFXProperties.put("popupKeyCodeCombination", KeyCode.S);
+ScreenFXProperties.put("popupKeyCodeCombination", KeyCode.SHIFT); //you can also use modifiers!
+ScreenFXProperties.put("popupKeyCodeCombination", KeyCombination.keyCombination("Ctrl+Alt+X"));
+ScreenFXProperties.put("popupKeyCodeCombination", KeyCharacterCombination.keyCombination("Ctrl+S"));
 </pre>
 
 <p>If you want to remove the key combinations do some property remove() call like the following example shows</p>
@@ -109,18 +108,6 @@ ScreenFXProperties.remove("quickResizeKeyCodeCombination");
 ScreenFXProperties.remove("activateTaskbarKeyCodeCombination");
 </pre>
 
-<p>There are four possible ways to set single key accelerators or key combinations of ScreenFX:</p>
-
-<pre>
-ScreenFXProperties.put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
-ScreenFXProperties.put("popupKeyCodeCombination", KeyCode.S);
-ScreenFXProperties.put("popupKeyCodeCombination", KeyCode.SHIFT); //you can also use modifiers!
-ScreenFXProperties.put("popupKeyCodeCombination", KeyCombination.keyCombination("Ctrl+Alt+X"));
-ScreenFXProperties.put("popupKeyCodeCombination", KeyCharacterCombination.keyCombination("Ctrl+S"));
-</pre>
-
-<p>ScreenFX can be used with normal builder-like source code as well as using with FXML and a controller class. See the example distributed with the library.</p>
-
 <h2>
 <a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
 
@@ -128,6 +115,7 @@ ScreenFXProperties.put("popupKeyCodeCombination", KeyCharacterCombination.keyCom
 <a name="general" class="anchor" href="#general"><span class="octicon octicon-link"></span></a>General</h3>
 
 <ul>
+<li>can be used with normal builder-like source code as well as using with FXML and a controller class. See the example distributed with the library.</li>
 <li>compatible up to 9 screens (cubic layout, master screen in middle of cube)</li>
 <li>control one stage from another (install controller button for stage nr. 1 on a stage nr. 2)</li>
 <li>standard language support german + english</li>
@@ -214,7 +202,7 @@ ScreenFXProperties.put("popupKeyCodeCombination", KeyCharacterCombination.keyCom
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see http://www.gnu.org/licenses/gpl-3.0.html
  */
-</pre>
+</pre></pre>
       </section>
     </div>
 
