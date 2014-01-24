@@ -23,7 +23,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
@@ -32,7 +31,7 @@ import javafx.scene.layout.AnchorPane;
  * @author vmario
  * 
  */
-public class ScreenFXDemo implements Initializable {
+public class ScreenFXDemo {
 	@FXML
 	private ResourceBundle resources;
 
@@ -47,14 +46,6 @@ public class ScreenFXDemo implements Initializable {
 
 	@FXML
 	private ToggleButton toggleButtonScreenFX;
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-	}
-
-	@FXML
-	private void handleScreenFX() {
-	}
 
 	ToggleButton getToggleButtonScreenFX() {
 		return toggleButtonScreenFX;

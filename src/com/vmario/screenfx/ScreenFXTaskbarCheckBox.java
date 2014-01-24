@@ -48,14 +48,16 @@ class ScreenFXTaskbarCheckBox extends CheckBox {
 	 */
 	ScreenFXTaskbarCheckBox(Stage stage, int screenNr, int buttonSize) throws Exception {
 		ImageView taskBarCheckBoxIcon = new ImageView(this.getClass()
-				.getResource(ScreenFXConfig.getResourcePath() + "taskbar.png").toExternalForm());
+				.getResource(ScreenFXConfig.getResourcePath() + "/images/taskbar.png").toExternalForm());
 		setSelected(true);
 		setGraphic(taskBarCheckBoxIcon);
 		setMinHeight(buttonSize);
 		setMinWidth(buttonSize);
 		setMaxHeight(buttonSize);
 		setMaxWidth(buttonSize);
-		setStyle("-fx-font-size:10;");
+		/* add style from css */
+		setId("taskbarcheckbox");
+		getStylesheets().add(ScreenFXConfig.getResourcePath() + "css/taskbarcheckbox.css");
 
 		Glow glow = new Glow(0.5);
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -86,9 +88,7 @@ class ScreenFXTaskbarCheckBox extends CheckBox {
 					+ taskbarIncludeKey));
 		}
 
-		/*
-		 * init selected value from standard properties
-		 */
+		/* init selected value from standard properties */
 		setSelected(ScreenFXConfig.getTaskbarIncludeSelectedProperties().get(screenNr));
 		selectedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
@@ -108,7 +108,7 @@ class ScreenFXTaskbarCheckBox extends CheckBox {
 		 */
 
 		if (ScreenFXConfig.getInstance().get(activateTaskbarPropertyName) != null) {
-			
+
 			stage.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 				@Override
 				public void handle(KeyEvent event) {

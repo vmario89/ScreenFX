@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+#taskbarcheckbox>.box {
+	-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border,
+		-fx-inner-border, -fx-body-color;
+	-fx-background-insets: 0 0 -1 0, 0, 1, 2;
+	-fx-background-radius: 2, 2, 1, 1;
+}
+
+#taskbarcheckbox:focused>.box {
+	-fx-background-color: -fx-focus-color, -fx-outer-border,
+		-fx-inner-border, -fx-body-color;
+	-fx-background-insets: -1.4, 0, 1, 2;
+	-fx-background-radius: 3.4, 2, 1, 1;
+}
+
+#taskbarcheckbox:hover>.box {
+	-fx-color: -fx-hover-base;
+}
+
+#taskbarcheckbox:armed>.box {
+	-fx-color: -fx-pressed-base;
+}
+
+#taskbarcheckbox>.box>.mark {
+	-fx-background-color: transparent;
+	-fx-background-insets: 1 0 -1 0, 0;
+	-fx-padding: 0.333333em;
+	-fx-shape: "M0,4H2L3,6L6,0H8L4,8H2Z";
+}
+
+#taskbarcheckbox:indeterminate>.box>.mark {
+	-fx-background-color: -fx-mark-highlight-color, -fx-mark-color;
+	-fx-padding: 0.544444em;
+	-fx-shape: "M0,0H8V2H0Z";
+}
+
+#taskbarcheckbox:selected>.box>.mark {
+	-fx-background-color: -fx-mark-highlight-color, -fx-mark-color;
+}
+
+#taskbarcheckbox:disabled {
+	-fx-opacity: -fx-disabled-opacity;
+}

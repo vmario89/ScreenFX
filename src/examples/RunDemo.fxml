@@ -3,17 +3,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPaneRoot" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="examples.ScreenFXDemo">
+<AnchorPane fx:id="anchorPaneRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examples.ScreenFXDemo">
   <!-- TODO Add Nodes -->
   <children>
     <StackPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0">
           <children>
-            <Button id="test" fx:id="buttonShowScreenFX" mnemonicParsing="false" onAction="#handleScreenFX" text="Show ScreenFX" />
-            <ToggleButton fx:id="toggleButtonScreenFX" mnemonicParsing="false" onAction="#handleScreenFX" text="Toggle ScreenFX" />
+            <Button id="test" fx:id="buttonShowScreenFX" mnemonicParsing="false" text="Show ScreenFX" />
+            <ToggleButton fx:id="toggleButtonScreenFX" mnemonicParsing="false" text="Toggle ScreenFX" />
           </children>
         </HBox>
       </children>

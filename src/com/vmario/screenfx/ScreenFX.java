@@ -75,8 +75,6 @@ public class ScreenFX {
 	}
 
 	/**
-	 * @param stage
-	 *            the stage which should be controlled by the node
 	 * @param node
 	 *            install ScreenFX to a single node. If the node is instance of
 	 *            "ButtonBase" then an action event plus tooltip is
@@ -88,9 +86,9 @@ public class ScreenFX {
 	 *            foucs. If false you have to focus the node before your key
 	 *            combination will work
 	 */
-	public void installOn(Stage stage, Node node, boolean installGlobal) {
+	public void installOn(Node node, boolean installGlobal) {
 		try {
-			this.stage = stage;
+			this.stage = (Stage) node.getScene().getWindow();
 			logger.log(Level.INFO, "installing ScreenFX on node @ stage " + this.stage.getTitle());
 
 			/*
@@ -98,7 +96,8 @@ public class ScreenFX {
 			 * combination
 			 */if (ScreenFXConfig.getInstance().get(popupKeyPropertyName) != null) {
 				if (installGlobal) {
-					installOn(stage); // install automatically to whole scene
+					installOn(this.stage); // install automatically to whole
+											// scene
 				} else {
 					// on key press - works only if component has focus!
 					node.setOnKeyPressed(new EventHandler<KeyEvent>() {

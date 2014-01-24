@@ -47,7 +47,8 @@ class ScreenFXGridAllocator {
 	 *            the button grid pane
 	 * @param buttonSize
 	 *            the button size for width and height in pixel
-	 * @throws Exception push exceptions
+	 * @throws Exception
+	 *             push exceptions
 	 */
 	public ScreenFXGridAllocator(ScreenFXPositioner sfxPositioner, GridPane buttonGridPane, int buttonSize)
 			throws Exception {
@@ -59,18 +60,18 @@ class ScreenFXGridAllocator {
 		List<ImageView> buttonImages = new ArrayList<ImageView>(12);
 		try {
 			//@formatter:off
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-left-top.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-middle-top.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-right-top.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-left-middle.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-middle-middle.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-right-middle.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-left-bottom.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-middle-bottom.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-right-bottom.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-height.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-fullscreen.png").toExternalForm()));
-			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "screen-width.png").toExternalForm()));	
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-left-top.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-middle-top.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-right-top.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-left-middle.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-middle-middle.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-right-middle.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-left-bottom.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-middle-bottom.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-right-bottom.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-height.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-fullscreen.png").toExternalForm()));
+			buttonImages.add(new ImageView(this.getClass().getResource(ScreenFXConfig.getResourcePath() + "images/screen-width.png").toExternalForm()));	
 			//@formatter:on				
 
 		} catch (Exception e) {
@@ -118,20 +119,6 @@ class ScreenFXGridAllocator {
 		sfxGridElementList.add(new ScreenFXGridElement(3, 2, "11", buttonSize, buttonImages.get(11), ScreenFXConfig.getResourceBundle().getString("resize-width"), ScreenFXPosition.RESIZE_WIDTH));
 		//@formatter:on
 
-		// Override the icon set if property is given
-		if (ScreenFXConfig.getInstance().get("iconSet") != null) {
-			try {
-				ArrayList<ImageView> iconSet = (ArrayList<ImageView>) ScreenFXConfig.getInstance().get(
-						"iconSet");
-				for (int i = 0; i < iconSet.size(); i++) {
-					sfxGridElementList.get(i).setGraphic(iconSet.get(i));
-				}
-			} catch (Exception e) {
-				logger.log(Level.WARNING, "icon image could not be assigned", e);
-			}
-
-		}
-
 		/*
 		 * disable some buttons if window is not resizable
 		 */
@@ -176,9 +163,9 @@ class ScreenFXGridAllocator {
 
 		/*
 		 * this event handler will set the actions for each button. if the
-		 * button is index 10 then the sfxPositioner.getStage() has to be set to fullscreen or to
-		 * be quit from - this action event cannot be processed by
-		 * ScreenFXPositioner
+		 * button is index 10 then the sfxPositioner.getStage() has to be set to
+		 * fullscreen or to be quit from - this action event cannot be processed
+		 * by ScreenFXPositioner
 		 */
 		for (ScreenFXGridElement screenFXGridElement : sfxGridElementList) {
 			buttonGridPane.add(screenFXGridElement, screenFXGridElement.getColumnIndex(),
@@ -187,7 +174,8 @@ class ScreenFXGridAllocator {
 				@Override
 				public void handle(MouseEvent event) {
 					try {
-						// if sfxPositioner.getStage() is in fullscreen and a resize button is
+						// if sfxPositioner.getStage() is in fullscreen and a
+						// resize button is
 						// pressed disable the fullscreen properly. do not do
 						// this action for the fullscreen button itself
 						if (sfxPositioner.getStage().isFullScreen()) {

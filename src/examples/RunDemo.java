@@ -41,12 +41,13 @@ public class RunDemo extends Application {
 			ScreenFXDemo fooController = (ScreenFXDemo) fxmlLoader.getController();
 			stage1.setScene(sc);
 			ScreenFX sfx0 = new ScreenFX();
-			sfx0.installOn(stage1, fooController.getButtonShowScreenFX(), true);
-			sfx0.installOn(stage1, fooController.getToggleButtonScreenFX(), false);
+			sfx0.installOn(fooController.getButtonShowScreenFX(), true);
+			sfx0.installOn(fooController.getToggleButtonScreenFX(), false);
 			stage1.show();
 
 			Stage infoStage = new Stage(StageStyle.UNIFIED);
 			ScreenFX sfx1 = new ScreenFX();
+			sfx1.installOn(infoStage);
 			infoStage.setTitle("ScreenFX info box");
 			AnchorPane secondaryStageRoot = new AnchorPane();
 			TextArea description = new TextArea(sfx1.getTooltipText());
@@ -66,18 +67,19 @@ public class RunDemo extends Application {
 
 			Stage stage2 = new Stage();
 			stage2.setTitle("ScreenFX 2. stage");
-			AnchorPane sage2root = new AnchorPane();
-			stage2.setResizable(false);
+			AnchorPane stage2root = new AnchorPane();
+			stage2.initStyle(StageStyle.DECORATED);
+//			stage2.setResizable(false);
 			Button button = new Button("Show ScreenFX");
-			sage2root.getChildren().add(button);
+			stage2root.getChildren().add(button);
 			stage2.setWidth(300);
 			stage2.setHeight(300);
 			stage2.setX(200);
 			stage2.setY(500);
-			Scene scene = new Scene(sage2root);
+			Scene scene = new Scene(stage2root);
 			stage2.setScene(scene);
 			ScreenFX sfx2 = new ScreenFX();
-			sfx2.installOn(stage2, button, false); // install the resize
+			sfx2.installOn(button, false); // install the resize
 													// controller
 			// a stage to control another
 			// stage
@@ -85,13 +87,13 @@ public class RunDemo extends Application {
 
 			Stage stage3 = new Stage();
 			stage3.setTitle("ScreenFX 3. stage");
-			AnchorPane stage4root = new AnchorPane();
-			stage4root.getChildren().add(button);
+			AnchorPane stage3root = new AnchorPane();
+			stage3root.getChildren().add(button);
 			stage3.setWidth(300);
 			stage3.setHeight(300);
 			stage3.setX(500);
 			stage3.setY(500);
-			stage3.setScene(new Scene(stage4root));
+			stage3.setScene(new Scene(stage3root));
 			stage3.show();
 		} catch (Exception e) {
 			e.printStackTrace();

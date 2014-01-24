@@ -42,12 +42,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -77,14 +72,10 @@ class ScreenFXPopup extends Popup {
 		// a proper rendering there is a rectangle needed to display the
 		// background of the rectangle and popup have the same bounds
 		Rectangle borderRectangle = new Rectangle();
-		borderRectangle.setArcWidth(15);
-		borderRectangle.setArcHeight(15);
-		Stop[] stops = new Stop[] { new Stop(0, Color.rgb(255, 255, 255)),
-				new Stop(1, Color.rgb(227, 227, 227)) };
-		LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
-		borderRectangle.setFill(lg1);
-		borderRectangle.setStroke(Color.BLACK);
-		borderRectangle.setStrokeType(StrokeType.OUTSIDE);
+		/* add style from css */
+		borderRectangle.setId("borderrectangle");
+		stage.getScene().getStylesheets().add(ScreenFXConfig.getResourcePath() + "css/borderrectangle.css");
+
 		getContent().addAll(borderRectangle);
 		setAutoFix(true);
 		setHideOnEscape(true);
@@ -204,7 +195,7 @@ class ScreenFXPopup extends Popup {
 			// screen
 			Label screenLabel = new Label("#" + (screenNr + 1));
 			ImageView screenIcon = new ImageView(this.getClass()
-					.getResource(ScreenFXConfig.getResourcePath() + "screen.png").toExternalForm());
+					.getResource(ScreenFXConfig.getResourcePath() + "images/screen.png").toExternalForm());
 			screenLabel.setGraphic(screenIcon);
 			screenLabel.setMaxWidth(Double.MAX_VALUE);
 			screenLabel.setTextAlignment(TextAlignment.CENTER);

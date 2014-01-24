@@ -25,7 +25,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -46,7 +45,7 @@ public class ScreenFXConfig extends Properties {
 	/*
 	 * for public access through getters/setters
 	 */
-	private static String resourcePath = "/com/vmario/screenfx/resource/";
+	private static String resourcePath = "/com/vmario/screenfx/resource/"; //top level path for images, css files and language files
 	private static List<Boolean> taskbarIncludeSelectedProperties = new ArrayList<Boolean>(9);
 	private static boolean allowTooltips = true;
 	private static long exitDelayTime = 350l;
@@ -71,12 +70,9 @@ public class ScreenFXConfig extends Properties {
 			taskbarIncludeSelectedProperties.add(new Boolean(true));
 			taskbarIncludeIndeterminateProperties.add(new Boolean(false));
 		}
-
-		put("iconSet", new ArrayList<ImageView>());
 		put("popupKeyCodeCombination", new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		put("quickResizeKeyCodeCombination", KeyCode.CONTROL);
 		put("activateTaskbarKeyCodeCombination", KeyCode.SHIFT);
-
 	}
 
 	static String getResourcePath() {
